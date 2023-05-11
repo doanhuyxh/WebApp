@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using WebApp.Data;
 using WebApp.Models;
@@ -47,10 +48,11 @@ namespace WebApp.Controllers
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(model.UserName);
+                var role = await _userManager.GetRolesAsync(user);
+                _logger.LogInformation("Role" + role[0].ToString());
                 var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, "UserRole")
 
                 };
 
@@ -70,15 +72,8 @@ namespace WebApp.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
-
-                await HttpContext.Response.Cookies.AuthenticateAsync(
-                      CookieAuthenticationDefaults.CookiePrefix + CookieAuthenticationDefaults.AuthenticationScheme,
-                       await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme),
-                        new CookieOptions  {
-        // Cấu hình các thuộc tính của cookie (nếu cần)
-                    });
-
-                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                
+                return Redirect("~/Admin/Dashboard/Index");
             }
             else
             {
@@ -114,9 +109,13 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync(); // Đăng xuất người dùng
-
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home"); // Chuyển hướng đến trang chủ hoặc trang khác
+        }
+
+        public IActionResult AccessDenied ()
+        {
+            return View();
         }
     }
 }

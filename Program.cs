@@ -26,6 +26,7 @@ namespace WebApp
 
 
             // Add services to the container.
+            builder.Services.AddRazorPages();
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
@@ -79,8 +80,8 @@ namespace WebApp
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddCookie(options =>
             {
-                options.Cookie.Name = "MyCookieName"; // Tên cookie
-                options.Cookie.Domain = "example.com"; // Tên miền cookie áp dụng (nếu có)
+                options.Cookie.Name = "WebApp"; // Tên cookie
+                options.Cookie.Domain = "scammer.click"; // Tên miền cookie áp dụng (nếu có)
                 options.Cookie.Path = "/"; // Đường dẫn cookie áp dụng
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; // Chính sách bảo mật (SameAsRequest, Always, None)
                 options.Cookie.HttpOnly = true; // Cookie chỉ được truy cập bằng HTTP (không bằng JavaScript)
@@ -111,19 +112,19 @@ namespace WebApp
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-                endpoints.MapRazorPages();
-
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+                
+                
                 endpoints.MapControllerRoute(
                     name: "admin",
                     pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}",
                     defaults: new { area = "Admin" });
 
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
 
             using (var scope = app.Services.CreateScope())
