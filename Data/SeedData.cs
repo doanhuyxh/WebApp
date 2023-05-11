@@ -33,12 +33,13 @@ namespace WebApp.Data
             await roleManager.CreateAsync(new IdentityRole("Member"));
 
             // Add super admin user
+            var superAdminEmail = _configuration["SuperAdminDefaultOption:Email"];
             var superAdminUserName = _configuration["SuperAdminDefaultOption:Username"];
             var superAdminPassword = _configuration["SuperAdminDefaultOption:Password"];
             var superAdminUser = new ApplicationUser
             {
+                Email = superAdminEmail,
                 UserName = superAdminUserName,
-                Email = superAdminUserName
             };
 
             var result = await userManager.CreateAsync(superAdminUser, superAdminPassword);

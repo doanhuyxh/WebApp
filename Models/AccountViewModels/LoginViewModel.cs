@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApp.Models.ViewModel
+namespace WebApp.Models.AccountViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage ="Email không được để trống")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Required(ErrorMessage = "Tài khoản không được để trống")]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Mật khẩu không được để trống")]
         [DataType(DataType.Password)]
