@@ -2,7 +2,7 @@
 
 namespace WebApp.Controllers
 {
-    public class UserManager : Controller
+    public class UserManagerController : Controller
     {
         public IActionResult Index()
         {

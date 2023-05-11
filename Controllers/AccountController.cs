@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login() { return View(); }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Register() { return View(); }
     }
 }
