@@ -76,7 +76,7 @@ namespace WebApp.Controllers
                        await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme),
                         new CookieOptions  {
         // Cấu hình các thuộc tính của cookie (nếu cần)
-                        });
+                    });
 
                 return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
             }
