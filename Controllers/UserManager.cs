@@ -2,7 +2,7 @@
 
 namespace WebApp.Controllers
 {
-    public class LockoutController : Controller
+    public class UserManager : Controller
     {
         public IActionResult Index()
         {

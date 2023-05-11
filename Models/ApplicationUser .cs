@@ -4,6 +4,6 @@ namespace WebApp.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        // Add any additional properties here
+
     }
 }
