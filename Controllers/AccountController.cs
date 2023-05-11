@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.AccountViewModels;
@@ -43,6 +46,38 @@ namespace WebApp.Controllers
 
             if (result.Succeeded)
             {
+                var user = await _userManager.FindByNameAsync(model.UserName);
+                var claims = new List<Claim> {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, "UserRole")
+
+                };
+
+                // Xây dựng ClaimsIdentity
+                var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                // Thiết lập các thuộc tính xác thực (nếu có)
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true, // Thiết lập cho phép lưu cookie vĩnh viễn (remember me)
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2), // Thiết lập thời gian hết hạn sau 2 giờ
+                };
+
+                // Đăng nhập người dùng và tạo cookie
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+
+                await HttpContext.Response.Cookies.AuthenticateAsync(
+                      CookieAuthenticationDefaults.CookiePrefix + CookieAuthenticationDefaults.AuthenticationScheme,
+                       await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme),
+                        new CookieOptions  {
+        // Cấu hình các thuộc tính của cookie (nếu cần)
+                        });
+
                 return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
             }
             else
@@ -73,6 +108,15 @@ namespace WebApp.Controllers
                 }
             }
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync(); // Đăng xuất người dùng
+
+            return RedirectToAction("Index", "Home"); // Chuyển hướng đến trang chủ hoặc trang khác
         }
     }
 }
