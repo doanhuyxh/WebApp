@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.Hosting;
 using System.Configuration;
 using WebApp.Data;
 using WebApp.Models;
@@ -10,7 +11,7 @@ namespace WebApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,9 @@ namespace WebApp
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
+            builder.Services.AddScoped<UserManager<ApplicationUser>>();
+
+            builder.Services.AddScoped<IIdentityDataInitializer, IdentityDataInitializer>();
 
 
             builder.Services.Configure<IdentityOptions>(options =>
@@ -49,7 +53,7 @@ namespace WebApp
                 options.Password.RequiredUniqueChars = 1;
 
                 // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
 
@@ -81,7 +85,7 @@ namespace WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "admin",
-                    pattern: "admin/{controller=Dashboard}/{action=Index}/{id?}",
+                    pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}",
                     defaults: new { area = "Admin" });
 
                 endpoints.MapControllerRoute(
@@ -89,6 +93,16 @@ namespace WebApp
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
             });
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var initializer = services.GetRequiredService<IIdentityDataInitializer>();
+                await initializer.SeedData(
+                    services.GetRequiredService<UserManager<ApplicationUser>>(),
+                    services.GetRequiredService<RoleManager<IdentityRole>>()
+                );
+            }
 
             app.Run();
         }
