@@ -84,14 +84,15 @@ namespace WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "admin",
                     pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}",
                     defaults: new { area = "Admin" });
 
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+                
             });
 
             using (var scope = app.Services.CreateScope())
