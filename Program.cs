@@ -74,11 +74,7 @@ namespace WebApp
                 options.Cookie.IsEssential = true; // Đảm bảo phiên vẫn hoạt động ngay cả khi người dùng không đồng ý cookie
             });
 
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(options =>
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.Cookie.Name = "WebApp"; // Tên cookie
                 options.Cookie.Domain = "scammer.click"; // Tên miền cookie áp dụng (nếu có)
@@ -86,13 +82,19 @@ namespace WebApp
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; // Chính sách bảo mật (SameAsRequest, Always, None)
                 options.Cookie.HttpOnly = true; // Cookie chỉ được truy cập bằng HTTP (không bằng JavaScript)
                 options.Cookie.SameSite = SameSiteMode.Strict; // Giới hạn cookie chỉ được gửi trong cùng nguồn (Strict, Lax, None)
-
+                options.LoginPath = "/Account/Login";
                 options.ExpireTimeSpan = TimeSpan.FromDays(7); // Thời gian hết hạn của cookie
                 options.SlidingExpiration = true; // Cho phép cập nhật thời gian hết hạn khi có hoạt động từ người dùng
                 options.AccessDeniedPath = "/Account/AccessDenied"; // Đường dẫn chuyển hướng khi truy cập bị từ chối
             });
 
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true; // Yêu cầu sự đồng ý của người dùng
+                options.MinimumSameSitePolicy = SameSiteMode.None; // Chỉ cho phép gửi cookie qua cross-site
 
+                // Cấu hình các thuộc tính khác của Cookie Policy (nếu cần)
+            });
             var app = builder.Build();
 
 
@@ -102,26 +104,24 @@ namespace WebApp
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSession();
             app.UseRouting();
+            app.UseSession();
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
-                
-                
-                endpoints.MapControllerRoute(
-                    name: "admin",
-                    pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}",
-                    defaults: new { area = "Admin" });
-
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                   name: "admin",
+                   pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}",
+                   defaults: new { area = "Admin" });
 
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();

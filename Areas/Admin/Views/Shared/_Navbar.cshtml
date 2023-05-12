@@ -49,6 +49,8 @@
 
 <script>
     function LogOut(){
-        fetch("/Account/Logout")
+        fetch("/Account/Logout",{
+            method: 'POST'
+        })
     }
 </script>

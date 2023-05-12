@@ -49,11 +49,10 @@ namespace WebApp.Controllers
             {
                 var user = await _userManager.FindByNameAsync(model.UserName);
                 var role = await _userManager.GetRolesAsync(user);
-                _logger.LogInformation("Role" + role[0].ToString());
                 var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-
+                new Claim(ClaimTypes.Role, role.FirstOrDefault()!)
                 };
 
                 // Xây dựng ClaimsIdentity
@@ -67,13 +66,13 @@ namespace WebApp.Controllers
                     ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2), // Thiết lập thời gian hết hạn sau 2 giờ
                 };
 
-                // Đăng nhập người dùng và tạo cookie
+                // Đăng ký phiên đăng nhập hiện tại vào HttpContext
                 await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
-                
-                return Redirect("~/Admin/Dashboard/Index");
+
+                return Redirect("/Admin/Dashboard/Index");
             }
             else
             {
