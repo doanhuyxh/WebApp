@@ -49,25 +49,25 @@
                         let html = '';
                         data.forEach((item, index) => {
                             html += `
-                                            <tr>
-                                            <td><img src="${item.avatartPath}" style="width:50px; height: auto"/></td>
-                                        <td>${item.userName}</td>
-                                        <td>${item.email}</td>
-                                        <td>${item.phoneNumber}</td>
-                                            <th>
-                                        <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="action${index}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Hành động
-                                            </button>
-                                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="action${index}">
-                                                                <li><a class="dropdown-item" onclick="Update('${item.email}')">cập nhật</a></li>
-                                                                    <li><a class="dropdown-item" onclick="ChangePassword('${item.email}')">Đổi mật khẩu</a></li>
-                                                <li><a class="dropdown-item">Gửi tin nhắn</a></li>
-                                            </ul>
-                                        </div>
-                                    </th>
-                                </tr>
-                                        `
+                                                <tr>
+                                                <td><img src="${item.avatartPath}" style="width:50px; height: auto"/></td>
+                                            <td>${item.userName}</td>
+                                            <td>${item.email}</td>
+                                            <td>${item.phoneNumber}</td>
+                                                <th>
+                                            <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="action${index}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Hành động
+                                                </button>
+                                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="action${index}">
+                                                                    <li><a class="dropdown-item" onclick="Update('${item.email}')">cập nhật</a></li>
+                                                                        <li><a class="dropdown-item" onclick="ChangePassword('${item.email}')">Đổi mật khẩu</a></li>
+                                                    <li><a class="dropdown-item">Gửi tin nhắn</a></li>
+                                                </ul>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                            `
                         });
                         document.querySelector("#tableUser tbody").innerHTML = html;
                     })
@@ -76,15 +76,15 @@
         }
     });
 
-    function Update(email){
+    function Update(email) {
         fetch(`/Admin/UserManager/GetAllUserByEmail?email=${email}`)
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data);
-        })
-    }
+            .then(res => res.json())
+            .then(data => {
+                $("#ModalAddUser").modal("show")
 
-    function ChangePassword(){
+            })
+    }
+    function ChangePassword() {
 
     }
 

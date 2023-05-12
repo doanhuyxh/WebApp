@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
+using WebApp.Models.AccountViewModels;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -30,6 +31,21 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
             return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddEditUser(UserProFileViewModel vm)
+        {
+            if (string.IsNullOrEmpty(vm.ApplicationUserId))
+            {
+                //tao moi
+            }
+            else
+            {
+                //sua
+            }
+
+            return View(vm);
         }
     }
 }
