@@ -41,7 +41,11 @@ namespace WebApp.Data
                 Email = superAdminEmail,
                 UserName = superAdminUserName,
             };
-
+            var adminUser = new ApplicationUser
+            {
+                Email = "admin",
+                UserName = superAdminUserName,
+            };
             var result = await userManager.CreateAsync(superAdminUser, superAdminPassword);
 
             if (result.Succeeded)

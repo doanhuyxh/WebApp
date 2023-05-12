@@ -4,6 +4,6 @@ namespace WebApp.Models
 {
     public class ApplicationUser : IdentityUser
     {
-
+        public string AvatartPath { get; set; } = string.Empty;
     }
 }
