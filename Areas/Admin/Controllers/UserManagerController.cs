@@ -11,7 +11,8 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public UserManagerController(ApplicationDbContext context) {
+        public UserManagerController(ApplicationDbContext context)
+        {
             _context = context;
         }
         public IActionResult Index()
@@ -22,6 +23,13 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var listUser = await _context.Users.ToArrayAsync();
             return Ok(listUser);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUserByEmail(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return Ok(user);
         }
     }
 }

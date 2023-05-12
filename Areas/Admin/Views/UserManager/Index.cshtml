@@ -8,7 +8,7 @@
 <div class="row" id="AppVueUser">
     <div class="col-xl-12 row mt-4">
         <div class="col-xl-10"></div>
-        <div class="col-xl-2"><button class="btn btn-success" type="button">Thêm người dùng</button></div>
+        <div class="col-xl-2"><button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#ModalAddUser">Thêm người dùng</button></div>
     </div>
     <div class="col-xl-12 mt-5">
         <table class="table" id="tableUser">
@@ -18,8 +18,7 @@
                     <th>Tài khoản</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
-                    <th>Hành động</th>
-                    <th><button>Sửa</button></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +27,7 @@
 
     </div>
 </div>
+@await Html.PartialAsync("_AddEditUser")
 
 <script type="text/javascript">
     const AppVueUser = new Vue({
@@ -45,22 +45,47 @@
             CallDataUser() {
                 fetch('/Admin/UserManager/GetAllUser')
                     .then(response => response.json())
-                    .then(data=>{
+                    .then(data => {
                         let html = '';
-                        data.forEach(item=>{
-                            html+=`
-                                <tr>
-                                <td><img src="${item.avatartPath}" style="width:50px; height: auto"/></td>
-                            <td>${item.userName}</td>
-                            <td>${item.email}</td>
-                            <td>${item.phoneNumber}</td>
-                    </tr>
-                            `
+                        data.forEach((item, index) => {
+                            html += `
+                                            <tr>
+                                            <td><img src="${item.avatartPath}" style="width:50px; height: auto"/></td>
+                                        <td>${item.userName}</td>
+                                        <td>${item.email}</td>
+                                        <td>${item.phoneNumber}</td>
+                                            <th>
+                                        <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="action${index}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Hành động
+                                            </button>
+                                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="action${index}">
+                                                                <li><a class="dropdown-item" onclick="Update('${item.email}')">cập nhật</a></li>
+                                                                    <li><a class="dropdown-item" onclick="ChangePassword('${item.email}')">Đổi mật khẩu</a></li>
+                                                <li><a class="dropdown-item">Gửi tin nhắn</a></li>
+                                            </ul>
+                                        </div>
+                                    </th>
+                                </tr>
+                                        `
                         });
                         document.querySelector("#tableUser tbody").innerHTML = html;
                     })
                     .catch(err => console.log(err))
             },
         }
-    })
+    });
+
+    function Update(email){
+        fetch(`/Admin/UserManager/GetAllUserByEmail?email=${email}`)
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data);
+        })
+    }
+
+    function ChangePassword(){
+
+    }
+
 </script>
