@@ -43,14 +43,25 @@ namespace WebApp.Data
             };
             var adminUser = new ApplicationUser
             {
-                Email = "admin",
-                UserName = superAdminUserName,
+                Email = "adminUser@gmail.com",
+                UserName = "adminUser",
             };
-            var result = await userManager.CreateAsync(superAdminUser, superAdminPassword);
+            var memberUser = new ApplicationUser
+            {
+                Email = "memberUser@gmail.com",
+                UserName = "memberUser",
+            };
 
-            if (result.Succeeded)
+            var result1 = await userManager.CreateAsync(superAdminUser, superAdminPassword);
+            var result2 = await userManager.CreateAsync(adminUser, superAdminPassword);
+            var result3 = await userManager.CreateAsync(memberUser, superAdminPassword);
+           
+
+            if (result1.Succeeded && result2.Succeeded && result3.Succeeded)
             {
                 await userManager.AddToRoleAsync(superAdminUser, "SuperAdmin");
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(memberUser, "Member");
             }
         }
     }

@@ -49,6 +49,7 @@ namespace WebApp.Controllers
             {
                 var user = await _userManager.FindByNameAsync(model.UserName);
                 var role = await _userManager.GetRolesAsync(user);
+
                 var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),

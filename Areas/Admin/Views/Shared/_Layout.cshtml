@@ -4,10 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] Admin Web</title>
+    <!--Bootsrap và jquery-->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+    <!--vuejs-->
+    <script src="~/lib/vuejs/vue_2_7_14.js"></script>
+    <!--axios-->
+    <script src="~/lib/vuejs/axios.min.js"></script>
 
     <link rel="stylesheet" href="~/lib/argon_dashboard_master/assets/css/nucleo-svg.css" />
     <link rel="stylesheet" href="~/lib/argon_dashboard_master/assets/css/nucleo-icons.css" />
@@ -30,7 +35,7 @@
     <div id="preloader">
         <div id="preloader-inner"></div>
     </div>
-    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    <div class="min-height-250 bg-primary position-absolute w-100"></div>
 
     @await Html.PartialAsync("_Sitebar")
     <main class="main-content position-relative border-radius-lg ">
