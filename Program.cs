@@ -29,6 +29,7 @@ namespace WebApp
             builder.Services.AddRazorPages();
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            
 
             //Add connetdatabase
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -123,9 +124,10 @@ namespace WebApp
                    pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}",
                    defaults: new { area = "Admin" });
 
-                endpoints.MapControllers();
-                endpoints.MapRazorPages();
             });
+
+            app.MapControllers();
+            app.MapRazorPages();
 
             using (var scope = app.Services.CreateScope())
             {
