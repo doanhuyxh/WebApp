@@ -48,12 +48,3 @@
     </div>
 </nav>
 @await Html.PartialAsync("_SubNav")
-
-<script>
-    function LogOut(){
-        fetch("/Account/Logout",{
-            method: 'POST',
-            
-        })
-    }
-</script>

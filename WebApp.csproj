@@ -27,7 +27,6 @@
 
 	<ItemGroup>
 		<Folder Include="Models\ViewModel\" />
-		<Folder Include="wwwroot\css\user\" />
 		<Folder Include="wwwroot\js\user\" />
 		<Folder Include="wwwroot\upload\" />
 	</ItemGroup>
