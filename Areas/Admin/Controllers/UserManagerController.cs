@@ -18,6 +18,15 @@ namespace WebApp.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.ListUser = (from _nd in _context.Users
+                                select new UserProFileViewModel
+                                {
+                                    ApplicationUserId = _nd.Id,
+                                    UserName = _nd.UserName,
+                                    Email = _nd.Email,
+                                    PhoneNumber = _nd.PhoneNumber,
+                                }
+                                ).ToList();
             return View();
         }
         public async Task<IActionResult> GetAllUser()
