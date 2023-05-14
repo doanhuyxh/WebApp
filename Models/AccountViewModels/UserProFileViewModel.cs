@@ -7,6 +7,7 @@ namespace WebApp.Models.AccountViewModels
         public string ApplicationUserId { get; set; }
         [Display(Name = "Ảnh đại diện")]
         public IFormFile AvatarFile { get; set; }
+        public string AvatarPath { get; set; }
         [Display(Name = "Nhóm người dùng")]
         public string Role { set; get; }
         [Display(Name = "Tài khoản")]

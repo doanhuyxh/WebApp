@@ -8,7 +8,7 @@
 <div class="row" id="AppVueUser">
     <div class="col-xl-12 row mt-4">
         <div class="col-xl-10"></div>
-        <div class="col-xl-2"><button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#ModalAddUser">Thêm người dùng</button></div>
+        <div class="col-xl-2"><div v-on:click="Update(' adads ')" class="btn btn-success">Thêm người dùng</div></div>
     </div>
     <div class="col-xl-12 mt-5">
         <table class="table" id="tableUser">
@@ -22,22 +22,21 @@
                 </tr>
             </thead>
             <tbody>
-                @ViewBag.ListUser;
                 @foreach (var item in ViewBag.ListUser)
                 {
                     <tr>
                         <td><img src="${item.avatartPath}" style="width:50px; height: auto" /></td>
-                        <td>item.userName</td>
-                        <td>item.email</td>
-                        <td>item.phoneNumber</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                        <td>@item.PhoneNumber</td>
                         <th>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="action${index}" data-bs-toggle="dropdown" aria-expanded="false">
                                     Hành động
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="action${index}">
-                                    <li><a class="dropdown-item" onclick="Update('${item.email}')">cập nhật</a></li>
-                                    <li><a class="dropdown-item" onclick="ChangePassword('${item.email}')">Đổi mật khẩu</a></li>
+                                    <li><a class="dropdown-item" v-on:click="Update('@item.Email')">cập nhật</a></li>
+                                    <li><a class="dropdown-item" v-on:click="ChangePassword('@item.Email')">Đổi mật khẩu</a></li>
                                     <li><a class="dropdown-item">Gửi tin nhắn</a></li>
                                 </ul>
                             </div>
@@ -49,8 +48,8 @@
 
     </div>
 </div>
-@await Html.PartialAsync("_AddEditUser")
 
+@await Html.PartialAsync("ChangePassword")
 <script type="text/javascript">
     const AppVueUser = new Vue({
         el: "#AppVueUser",
@@ -71,43 +70,45 @@
                         let html = '';
                         data.forEach((item, index) => {
                             html += `
-                                                <tr>
-                                                <td><img src="${item.avatartPath}" style="width:50px; height: auto"/></td>
-                                            <td>${item.userName}</td>
-                                            <td>${item.email}</td>
-                                            <td>${item.phoneNumber}</td>
-                                                <th>
-                                            <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="action${index}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Hành động
-                                                </button>
-                                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="action${index}">
-                                                                    <li><a class="dropdown-item" onclick="Update('${item.email}')">cập nhật</a></li>
-                                                                        <li><a class="dropdown-item" onclick="ChangePassword('${item.email}')">Đổi mật khẩu</a></li>
-                                                    <li><a class="dropdown-item">Gửi tin nhắn</a></li>
-                                                </ul>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                            `
+                                                    <tr>
+                                                    <td><img src="${item.avatartPath}" style="width:50px; height: auto"/></td>
+                                                <td>${item.userName}</td>
+                                                <td>${item.email}</td>
+                                                <td>${item.phoneNumber}</td>
+                                                    <th>
+                                                <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="action${index}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Hành động
+                                                    </button>
+                                                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="action${index}">
+                                                                        <li><a class="dropdown-item" onclick="Update('${item.email}')">cập nhật</a></li>
+                                                                            <li><a class="dropdown-item" onclick="ChangePassword('${item.email}')">Đổi mật khẩu</a></li>
+                                                        <li><a class="dropdown-item">Gửi tin nhắn</a></li>
+                                                    </ul>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                                `
                         });
-                       // document.querySelector("#tableUser tbody").innerHTML = html;
+                        // document.querySelector("#tableUser tbody").innerHTML = html;
                     })
                     .catch(err => console.log(err))
             },
+            Update(email) {
+                $("#BigModalDiv").load(`/Admin/UserManager/GetAllUserByEmail?email=${email}`, function () {
+                    $("#BigModal").modal("show");
+                    $("#titleBigModal").html("Cập nhật thông tin người dùng")
+                })
+            },
+            ChangePassword(email) {
+
+                $("#SmallModal").modal("show");
+                $("#EmailNguoiDung").val(email)
+            },
+            AddUser() {
+
+            }
         }
     });
-
-    function Update(email) {
-        fetch(`/Admin/UserManager/GetAllUserByEmail?email=${email}`)
-            .then(res => res.json())
-            .then(data => {
-                $("#ModalAddUser").modal("show")
-                $("#TitleModalAddUser").html("Sửa thông tin")
-                })
-    }
-    function ChangePassword() {
-
-    }
 
 </script>

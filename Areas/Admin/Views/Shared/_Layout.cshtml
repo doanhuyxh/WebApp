@@ -41,10 +41,8 @@
     <main class="main-content position-relative border-radius-lg ">
         @await Html.PartialAsync("_Navbar")
         @RenderBody()
-    </main>
-
-
-
+    </main>    
+    <partial name="~/Areas/Admin/Views/UIComponentsModel/_BigModal.cshtml" />
     <!-- Github buttons -->
     <script src="~/lib/github_buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
