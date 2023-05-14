@@ -8,7 +8,7 @@
 <div class="row" id="AppVueUser">
     <div class="col-xl-12 row mt-4">
         <div class="col-xl-10"></div>
-        <div class="col-xl-2"><div v-on:click="Update(' adads ')" class="btn btn-success">Thêm người dùng</div></div>
+        <div class="col-xl-2"><div v-on:click="AddUser" class="btn btn-success">Thêm người dùng</div></div>
     </div>
     <div class="col-xl-12 mt-5">
         <table class="table" id="tableUser">
@@ -35,9 +35,9 @@
                                     Hành động
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="action${index}">
-                                    <li><a class="dropdown-item" v-on:click="Update('@item.Email')">cập nhật</a></li>
-                                    <li><a class="dropdown-item" v-on:click="ChangePassword('@item.Email')">Đổi mật khẩu</a></li>
-                                    <li><a class="dropdown-item">Gửi tin nhắn</a></li>
+                                    <li class="cursor-pointer"><a class="dropdown-item" v-on:click="Update('@item.Email')">cập nhật</a></li>
+                                    <li class="cursor-pointer"><a class="dropdown-item" v-on:click="ChangePassword('@item.Email')">Đổi mật khẩu</a></li>
+                                    <li class="cursor-pointer"><a class="dropdown-item">Gửi tin nhắn</a></li>
                                 </ul>
                             </div>
                         </th>
@@ -54,7 +54,7 @@
     const AppVueUser = new Vue({
         el: "#AppVueUser",
         mounted() {
-            this.CallDataUser()
+
         },
         data: {
             ListUser: []
@@ -63,39 +63,8 @@
 
         },
         methods: {
-            CallDataUser() {
-                fetch('/Admin/UserManager/GetAllUser')
-                    .then(response => response.json())
-                    .then(data => {
-                        let html = '';
-                        data.forEach((item, index) => {
-                            html += `
-                                                    <tr>
-                                                    <td><img src="${item.avatartPath}" style="width:50px; height: auto"/></td>
-                                                <td>${item.userName}</td>
-                                                <td>${item.email}</td>
-                                                <td>${item.phoneNumber}</td>
-                                                    <th>
-                                                <div class="dropdown">
-                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="action${index}" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Hành động
-                                                    </button>
-                                                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="action${index}">
-                                                                        <li><a class="dropdown-item" onclick="Update('${item.email}')">cập nhật</a></li>
-                                                                            <li><a class="dropdown-item" onclick="ChangePassword('${item.email}')">Đổi mật khẩu</a></li>
-                                                        <li><a class="dropdown-item">Gửi tin nhắn</a></li>
-                                                    </ul>
-                                                </div>
-                                            </th>
-                                        </tr>
-                                                `
-                        });
-                        // document.querySelector("#tableUser tbody").innerHTML = html;
-                    })
-                    .catch(err => console.log(err))
-            },
             Update(email) {
-                $("#BigModalDiv").load(`/Admin/UserManager/GetAllUserByEmail?email=${email}`, function () {
+                $("#BigModalDiv").load(`/Admin/UserManager/AddEditUser?email=${email}`, function () {
                     $("#BigModal").modal("show");
                     $("#titleBigModal").html("Cập nhật thông tin người dùng")
                 })
@@ -106,9 +75,33 @@
                 $("#EmailNguoiDung").val(email)
             },
             AddUser() {
-
-            }
+                $("#BigModalDiv").load(`/Admin/UserManager/AddUser`, function () {
+                    $("#BigModal").modal("show");
+                    $("#titleBigModal").html("Thêm người dùng mới")
+                })
+            },
         }
     });
+    function Save() {
+        const data = new FormData();
+
+        data.append("ApplicationUserId", $("#ApplicationUserId").val())
+        data.append("FisrtName", $("#FisrtName").val())
+        data.append("LastName", $("#LastName").val())
+            data.append("PhoneNumber", $("#PhoneNumber").val())
+        data.append("Email", $("#Email").val())
+        data.append("AvatarFile", document.getElementById("AvatarFile").files[0])
+
+
+        fetch("/Admin/UserManager/AddEditUser",{
+            method:'POST',
+            headers:{
+                "Content-Type": false,
+            },
+            body : data            
+        }).
+        then(res=>res);
+
+    }
 
 </script>

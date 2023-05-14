@@ -1,6 +1,6 @@
 ﻿@model WebApp.Models.AccountViewModels.UserProFileViewModel;
 
-<form method="post" enctype="multipart/form-data" action="/UserManager/AddEditUser">
+<form>
         <input hidden asp-for="ApplicationUserId" />
         <div class="form-group">
             <label asp-for="FisrtName" class="control-label"></label>
@@ -14,12 +14,12 @@
         </div>
         <div class="form-group">
             <label asp-for="UserName" class="control-label"></label>
-            <input asp-for="UserName" class="form-control" />
+            <input asp-for="UserName" readonly class="form-control" />
             <span asp-validation-for="UserName" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Email" class="control-label"></label>
-            <input asp-for="Email" class="form-control" />
+            <input asp-for="Email" readonly class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -29,9 +29,9 @@
         </div>
         <div class="form-group">
             <label asp-for="AvatarFile" class="control-label"></label>
-            <input asp-for="AvatarFile" class="form-control" />
+        <input asp-for="AvatarFile" type="file" class="form-control" id="AvatarFile" />
             <span asp-validation-for="AvatarFile" class="text-danger"></span>
         </div>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" onclick="Save()">Save changes</button>
 </form>

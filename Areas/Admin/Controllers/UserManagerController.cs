@@ -43,25 +43,9 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUserByEmail(string email)
+        public IActionResult AddUser()
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return PartialView("_EditProFileUser");
-            }
-            else
-            {
-                UserProFileViewModel user2 = new();
-                user2.Email = user.Email;
-                user2.PhoneNumber = user.PhoneNumber;
-                user2.UserName = user.UserName;
-                user2.FisrtName = user.FirstName;
-                user2.LastName = user.LastName;
-                user2.ApplicationUserId = user.Id;
-                user2.AvatarPath = user.AvatartPath;
-                return PartialView("_EditProFileUser", user2);
-            }
+            return PartialView("_AddUser");
         }
 
         public async Task<IActionResult> AddEditUser(string email)
@@ -93,10 +77,23 @@ namespace WebApp.Areas.Admin.Controllers
             }
             else
             {
-                //sua
+                ApplicationUser user = await _userManager.FindByEmailAsync(vm.Email);
+                user.AvatartPath = vm.AvatarPath;
+                user.FirstName = vm.FisrtName;
+                user.LastName = vm.LastName;
+                user.PhoneNumber = vm.PhoneNumber;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return Redirect("/Admin/Dashboard/Index");
+                }
+                else
+                {
+                    return PartialView("_EditProFileUser", vm);
+                }
             }
 
-            return View(vm);
+            return PartialView("_EditProFileUser", vm);
         }
     }
 }
