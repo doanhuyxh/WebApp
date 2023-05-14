@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System.Configuration;
 using WebApp.Data;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp
 {
@@ -43,7 +44,7 @@ namespace WebApp
             builder.Services.AddScoped<UserManager<ApplicationUser>>();
 
             builder.Services.AddScoped<IIdentityDataInitializer, IdentityDataInitializer>();
-
+            builder.Services.AddScoped<ICommon, Common>();
 
             builder.Services.Configure<IdentityOptions>(options =>
             {

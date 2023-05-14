@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.AccountViewModels;
+using WebApp.Services;
+using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -14,11 +16,13 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
+        private readonly ICommon _icommon;
 
-        public UserManagerController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public UserManagerController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, ICommon icommon)
         {
             _userManager = userManager;
             _context = context;
+            _icommon = icommon;
         }
         public IActionResult Index()
         {
@@ -71,21 +75,43 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEditUser(UserProFileViewModel vm)
         {
+            JsonResultViewModel rs = new JsonResultViewModel();
+
             if (string.IsNullOrEmpty(vm.ApplicationUserId))
             {
-                //tao moi
+                ApplicationUser user = new();
+                user.AvatartPath = "upload/avatar/" + await _icommon.UploadAvatar(vm.AvatarFile);
+                user.UserName = vm.UserName;
+                user.LastName = vm.LastName;
+                user.UserName = vm.UserName;
+                user.PhoneNumber = vm.PhoneNumber;
+                user.Email = vm.Email;
+                var result = await _userManager.CreateAsync(user, vm.Password);
+                if (result.Succeeded)
+                {
+                    rs.Success = true;
+                    rs.Object = user;
+                    rs.Mesaage = "Đã Thêm mới user thành công";
+                    return new JsonResult(rs);
+                }
             }
             else
             {
                 ApplicationUser user = await _userManager.FindByEmailAsync(vm.Email);
-                user.AvatartPath = vm.AvatarPath;
+                if (vm.AvatarFile != null)
+                {
+                    user.AvatartPath = "upload/avatar/" + await _icommon.UploadAvatar(vm.AvatarFile);
+                }
                 user.FirstName = vm.FisrtName;
                 user.LastName = vm.LastName;
                 user.PhoneNumber = vm.PhoneNumber;
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    return Redirect("/Admin/Dashboard/Index");
+                    rs.Success = true;
+                    rs.Object = user;
+                    rs.Mesaage = "Đã Cập nhật thành công";
+                    return new JsonResult(rs);
                 }
                 else
                 {
@@ -93,7 +119,10 @@ namespace WebApp.Areas.Admin.Controllers
                 }
             }
 
-            return PartialView("_EditProFileUser", vm);
+            rs.Success = false;
+            rs.Object = null;
+            rs.Mesaage = "Đã xảy ra lỗi";
+            return new JsonResult(rs);
         }
     }
 }
