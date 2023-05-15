@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System.Configuration;
-using WebApp.CustomIdentity;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
@@ -44,23 +43,6 @@ namespace WebApp
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-            // Đăng ký ApplicationSignInManager
-            builder.Services.AddScoped<ApplicationSignInManager>(serviceProvider =>
-            {
-                var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                var contextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
-                var claimsFactory = serviceProvider.GetRequiredService<IUserClaimsPrincipalFactory<ApplicationUser>>();
-                var optionsAccessor = serviceProvider.GetRequiredService<IOptions<IdentityOptions>>();
-                var logger = serviceProvider.GetRequiredService<ILogger<SignInManager<ApplicationUser>>>();
-                var schemes = serviceProvider.GetRequiredService<IAuthenticationSchemeProvider>();
-                var userConfirm = serviceProvider.GetRequiredService<IUserConfirmation<ApplicationUser>>();
-
-                return new ApplicationSignInManager(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, userConfirm);
-            });
-
-            // Đăng ký IUserStore cho UserManager
-            builder.Services.AddScoped<IUserStore<ApplicationUser>>(serviceProvider =>
-                new UserStore<ApplicationUser>(serviceProvider.GetRequiredService<ApplicationDbContext>()));
 
             builder.Services.AddScoped<UserManager<ApplicationUser>>();
 
@@ -93,7 +75,7 @@ namespace WebApp
             //thêm session
             builder.Services.AddSession(options =>
             {
-                options.Cookie.Name = "Tên phiên";
+                options.Cookie.Name = "State1";
                 options.IdleTimeout = TimeSpan.FromMinutes(1); // Thời gian không hoạt động trước khi phiên hết hạn
                 options.Cookie.HttpOnly = true; // Chỉ cho phép truy cập thông qua HTTP
                 options.Cookie.IsEssential = true; // Đảm bảo phiên vẫn hoạt động ngay cả khi người dùng không đồng ý cookie

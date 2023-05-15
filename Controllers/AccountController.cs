@@ -8,7 +8,6 @@ using System.Security.Claims;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.AccountViewModels;
-using WebApp.CustomIdentity;
 
 namespace WebApp.Controllers
 {
@@ -16,12 +15,12 @@ namespace WebApp.Controllers
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly ApplicationSignInManager<ApplicationUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginViewModel> _logger;
         private readonly IConfiguration _iConfiguration;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, ApplicationDbContext context, ApplicationSignInManager<ApplicationUser> signInManager, ILogger<LoginViewModel> logger, IConfiguration iConfiguration)
+        public AccountController(UserManager<ApplicationUser> userManager, ApplicationDbContext context, SignInManager<ApplicationUser> signInManager, ILogger<LoginViewModel> logger, IConfiguration iConfiguration)
         {
             _context = context;
             _signInManager = signInManager;
@@ -43,12 +42,17 @@ namespace WebApp.Controllers
             {
                 return View(model);
             }
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user != null && !user.IsActive)
+            {
+                ModelState.AddModelError(string.Empty, "Tài khoản bị khoá");
+                return View(model);
+            }
 
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByNameAsync(model.UserName);
                 var role = await _userManager.GetRolesAsync(user);
 
                 var claims = new List<Claim> {
@@ -78,7 +82,7 @@ namespace WebApp.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, "Tài khoản hoặc mật khẩu bị lỗi");
                 return View(model);
             }
 
@@ -110,6 +114,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home"); // Chuyển hướng đến trang chủ hoặc trang khác
         }
 

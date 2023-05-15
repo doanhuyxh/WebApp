@@ -29,5 +29,6 @@ namespace WebApp.Models.AccountViewModels
         [Display(Name = "Xác nhận mật khẩu")]
         [Compare("Password", ErrorMessage = "Mật khẩu xác nhận không khớp.")]
         public string PasswordCompere { set; get; }
+        public bool IsActive { get; set; } = true;
     }
 }

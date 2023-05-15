@@ -35,7 +35,8 @@ namespace WebApp.Areas.Admin.Controllers
                                     PhoneNumber = _nd.PhoneNumber,
                                     FisrtName = _nd.FirstName,
                                     LastName = _nd.LastName,
-                                    AvatarPath = _nd.AvatartPath
+                                    AvatarPath = _nd.AvatartPath,
+                                    IsActive = _nd.IsActive,
                                 }
                                 ).ToList();
             ViewData["CurrentPage"] = "Quản Lý Người Dùng";
@@ -50,7 +51,8 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult AddUser()
         {
-            return PartialView("_AddUser");
+            UserProFileViewModel user = new UserProFileViewModel();
+            return PartialView("_AddUser", user);
         }
 
         public async Task<IActionResult> AddEditUser(string email)
@@ -87,6 +89,7 @@ namespace WebApp.Areas.Admin.Controllers
                 user.UserName = vm.UserName;
                 user.PhoneNumber = vm.PhoneNumber;
                 user.Email = vm.Email;
+                user.IsActive = true;
                 var result = await _userManager.CreateAsync(user, vm.Password);
                 if (result.Succeeded)
                 {
@@ -124,6 +127,34 @@ namespace WebApp.Areas.Admin.Controllers
             rs.Object = null;
             rs.Mesaage = "Đã xảy ra lỗi";
             return new JsonResult(rs);
+        }
+        public async Task<IActionResult> ChangeStatus(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            user.IsActive = !user.IsActive;
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
+        }
+        public async Task<IActionResult> ChangePassword(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, password);
+            if (result.Succeeded)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
     }
 }

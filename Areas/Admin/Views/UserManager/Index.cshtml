@@ -19,6 +19,7 @@
                     <th>Tài khoản</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
+                    <th>Hoạt động</th>
                     <th></th>
                 </tr>
             </thead>
@@ -31,6 +32,16 @@
                         <td>@item.FisrtName @item.LastName</td>
                         <td>@item.Email</td>
                         <td>@item.PhoneNumber</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <p class="btn btn-success" v-on:click="ChangeActive('@item.Email')">Đang hoạt động</p>
+                            }
+                            else
+                            {
+                                <p class="btn btn-danger" v-on:click="ChangeActive('@item.Email')">Đã tắt</p>
+                            }
+                        </td>
                         <th>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="action${index}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,9 +83,11 @@
                 })
             },
             ChangePassword(email) {
-
                 $("#SmallModal").modal("show");
-                $("#EmailNguoiDung").val(email)
+                $("#EmailNguoiDung").val(email);
+                $("#EmailNguoiDung").val("");
+                $("#ConfirmPassword").val("");
+                $("#Password").val("");
             },
             AddUser() {
                 $("#BigModalDiv").load(`/Admin/UserManager/AddUser`, function () {
@@ -82,18 +95,40 @@
                     $("#titleBigModal").html("Thêm người dùng mới")
                 })
             },
+            ChangeActive(email) {
+                fetch("/Admin/UserManager/ChangeStatus?email=" + email)
+                    .then(res => { window.location.reload() })
+            }
         }
     });
     function Save(type) {
-        const data = new FormData();
+        if (type == 3) {
+            let email = $("#EmailNguoiDung").val();
+            let pass = $("#ConfirmPassword").val();
+            fetch(`/Admin/UserManager/ChangePassword?email=${email}&password=${pass}`)
+                .then(res => {
+                    Swal.fire({
+                        title: "Mật khẩu đã được cập nhật",
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Oke'
+                    }).then((result) => {
+                        document.getElementById("close").click()
+                    })
+                })
+            return;
 
+        }
+
+        const data = new FormData();
         data.append("ApplicationUserId", $("#ApplicationUserId").val())
         data.append("FisrtName", $("#FisrtName").val())
         data.append("LastName", $("#LastName").val())
         data.append("PhoneNumber", $("#PhoneNumber").val())
         data.append("Email", $("#Email").val())
         data.append("AvatarFile", document.getElementById("AvatarFile").files[0])
-        if(type == 1){
+        data.append("IsActive", document.getElementById("IsActive"))
+        if (type == 1) {
             data.append("UserName", $("#UserName").val())
             data.append("Password", $("#Password2").val())
             data.append("Email", $("#Email").val())
