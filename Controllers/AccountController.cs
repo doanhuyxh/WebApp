@@ -8,6 +8,7 @@ using System.Security.Claims;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.AccountViewModels;
+using WebApp.CustomIdentity;
 
 namespace WebApp.Controllers
 {
@@ -15,12 +16,12 @@ namespace WebApp.Controllers
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationSignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginViewModel> _logger;
         private readonly IConfiguration _iConfiguration;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, ApplicationDbContext context, SignInManager<ApplicationUser> signInManager, ILogger<LoginViewModel> logger, IConfiguration iConfiguration)
+        public AccountController(UserManager<ApplicationUser> userManager, ApplicationDbContext context, ApplicationSignInManager<ApplicationUser> signInManager, ILogger<LoginViewModel> logger, IConfiguration iConfiguration)
         {
             _context = context;
             _signInManager = signInManager;
@@ -112,7 +113,7 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "Home"); // Chuyển hướng đến trang chủ hoặc trang khác
         }
 
-        public IActionResult AccessDenied ()
+        public IActionResult AccessDenied()
         {
             return View();
         }

@@ -38,6 +38,7 @@ namespace WebApp.Areas.Admin.Controllers
                                     AvatarPath = _nd.AvatartPath
                                 }
                                 ).ToList();
+            ViewData["CurrentPage"] = "Quản Lý Người Dùng";
             return View();
         }
         public async Task<IActionResult> GetAllUser()

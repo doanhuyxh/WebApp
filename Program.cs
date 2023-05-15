@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System.Configuration;
+using WebApp.CustomIdentity;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
@@ -30,7 +34,7 @@ namespace WebApp
             builder.Services.AddRazorPages();
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            
+
 
             //Add connetdatabase
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -40,11 +44,30 @@ namespace WebApp
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+            // Đăng ký ApplicationSignInManager
+            builder.Services.AddScoped<ApplicationSignInManager>(serviceProvider =>
+            {
+                var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var contextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+                var claimsFactory = serviceProvider.GetRequiredService<IUserClaimsPrincipalFactory<ApplicationUser>>();
+                var optionsAccessor = serviceProvider.GetRequiredService<IOptions<IdentityOptions>>();
+                var logger = serviceProvider.GetRequiredService<ILogger<SignInManager<ApplicationUser>>>();
+                var schemes = serviceProvider.GetRequiredService<IAuthenticationSchemeProvider>();
+                var userConfirm = serviceProvider.GetRequiredService<IUserConfirmation<ApplicationUser>>();
+
+                return new ApplicationSignInManager(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, userConfirm);
+            });
+
+            // Đăng ký IUserStore cho UserManager
+            builder.Services.AddScoped<IUserStore<ApplicationUser>>(serviceProvider =>
+                new UserStore<ApplicationUser>(serviceProvider.GetRequiredService<ApplicationDbContext>()));
 
             builder.Services.AddScoped<UserManager<ApplicationUser>>();
 
             builder.Services.AddScoped<IIdentityDataInitializer, IdentityDataInitializer>();
             builder.Services.AddScoped<ICommon, Common>();
+
+
 
             builder.Services.Configure<IdentityOptions>(options =>
             {
