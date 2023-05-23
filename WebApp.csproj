@@ -27,8 +27,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Models\ViewModel\" />
 		<Folder Include="wwwroot\js\user\" />
+		<Folder Include="wwwroot\lib\dataTable\" />
 	</ItemGroup>
 
 </Project>

@@ -16,7 +16,7 @@ namespace WebApp.Services
 
         public async Task<string> UploadAvatar(IFormFile avatar)
         {
-            string ProfilePictureFileName = null;
+            string ProfilePictureFileName = string.Empty;
 
             if (avatar != null)
             {
@@ -29,7 +29,7 @@ namespace WebApp.Services
                 string filePath = Path.Combine(uploadsFolder, ProfilePictureFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    avatar.CopyTo(fileStream);
+                    await avatar.CopyToAsync(fileStream);
                 }
             }
             return ProfilePictureFileName;

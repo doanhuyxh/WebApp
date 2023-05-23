@@ -40,22 +40,34 @@ namespace WebApp.Data
             {
                 Email = superAdminEmail,
                 UserName = superAdminUserName,
+                FirstName = "Đoàn",
+                LastName = "Quang Huy",
+                IsActive = true,
+                AvatartPath = "upload/avatar/blank_avatar.png"
             };
             var adminUser = new ApplicationUser
             {
                 Email = "adminUser@gmail.com",
                 UserName = "adminUser",
+                FirstName = "Người Dùng",
+                LastName = "1",
+                IsActive = true,
+                AvatartPath = "upload/avatar/blank_avatar.png"
             };
             var memberUser = new ApplicationUser
             {
                 Email = "memberUser@gmail.com",
                 UserName = "memberUser",
+                FirstName = "Khách Hàng",
+                LastName = "1",
+                IsActive = true,
+                AvatartPath = "upload/avatar/blank_avatar.png"
             };
 
             var result1 = await userManager.CreateAsync(superAdminUser, superAdminPassword);
             var result2 = await userManager.CreateAsync(adminUser, superAdminPassword);
             var result3 = await userManager.CreateAsync(memberUser, superAdminPassword);
-           
+
 
             if (result1.Succeeded && result2.Succeeded && result3.Succeeded)
             {
