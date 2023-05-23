@@ -5,11 +5,11 @@ namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    public class DashboardController : Controller
+    public class CallVideoAndChatController : Controller
     {
         public IActionResult Index()
         {
-            ViewData["CurrentPage"] = "Dashboad";
+            ViewData["CurrentPage"] = "Video Call";
             return View();
         }
     }
