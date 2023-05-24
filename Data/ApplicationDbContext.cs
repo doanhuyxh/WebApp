@@ -8,15 +8,9 @@ namespace WebApp.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            //...
-        }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Brand> Brand { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<Proudct> Proudct { get; set; }
     }
 }

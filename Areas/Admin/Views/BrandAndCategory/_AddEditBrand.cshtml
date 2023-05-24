@@ -1,0 +1,27 @@
+﻿@model WebApp.Models.ViewModel.BrandViewModel;
+
+<form>
+    <input hidden asp-for="Id" />
+    <input hidden asp-for="CreatedBy" />
+    <input hidden asp-for="CreatedDate" />
+    <input hidden asp-for="BrandImgLogo" />
+    <div class="form-group">
+        <label asp-for="BrandName" class="control-label"></label>
+        <input asp-for="BrandName" class="form-control" />
+        <span asp-validation-for="BrandName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BrandDescription" class="control-label"></label>
+        <input asp-for="BrandDescription" class="form-control" />
+        <span asp-validation-for="BrandDescription" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BrandImgFile" class="control-label"></label>
+        <input asp-for="BrandImgFile" readonly class="form-control" />
+        <span asp-validation-for="BrandImgFile" class="text-danger"></span>
+    </div>
+    <div class="col-12 d-inline-flex justify-content-end">
+        <button type="button" id="close" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="Save()">Lưu thay đổi</button>
+    </div>
+</form>

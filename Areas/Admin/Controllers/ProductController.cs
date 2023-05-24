@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Data;
+using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -7,6 +11,11 @@ namespace WebApp.Areas.Admin.Controllers
     [Authorize(Roles = "SuperAdmin, Admin")]
     public class ProductController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        public ProductController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             return View();
