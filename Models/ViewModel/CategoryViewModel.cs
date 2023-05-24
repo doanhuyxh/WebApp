@@ -1,6 +1,6 @@
 ﻿namespace WebApp.Models.ViewModel
 {
-    public class CategoryViewModel
+    public class CategoryViewModel : EntityBase
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -12,7 +12,10 @@
             {
                 Id = viewModel.Id,
                 Name = viewModel.Name,
-                ParentId = viewModel.ParentId
+                ParentId = viewModel.ParentId,
+                CreatedBy = viewModel.CreatedBy,
+                CreatedDate = viewModel.CreatedDate,
+                IsDeleted = viewModel.IsDeleted,
             };
         }
         public static implicit operator CategoryViewModel(Category category)
@@ -21,7 +24,10 @@
             {
                 Id = category.Id,
                 Name = category.Name,
-                ParentId = category.ParentId
+                ParentId = category.ParentId,
+                CreatedBy = category.CreatedBy,
+                CreatedDate = category.CreatedDate,
+                IsDeleted = category.IsDeleted,
             };
         }
     }

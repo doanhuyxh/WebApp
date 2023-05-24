@@ -2,7 +2,7 @@
 
 namespace WebApp.Models
 {
-    public class Brand
+    public class Brand : EntityBase
     {
         [Key]
         public int Id { get; set; }

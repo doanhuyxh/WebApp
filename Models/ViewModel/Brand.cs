@@ -2,7 +2,7 @@
 
 namespace WebApp.Models.ViewModel
 {
-    public class BrandViewModel
+    public class BrandViewModel : EntityBase
     {
         public int Id { get; set; }
         [Display(Name = "Tên thương hiệu")]
@@ -21,6 +21,9 @@ namespace WebApp.Models.ViewModel
                 BrandName = vm.BrandName,
                 BrandDescription = vm.BrandDescription,
                 BrandImgLogo = vm.BrandImgLogo,
+                CreatedBy = vm.CreatedBy,
+                CreatedDate = vm.CreatedDate,
+                IsDeleted = vm.IsDeleted,
             };
         }
         public static implicit operator BrandViewModel(Brand brand)
@@ -31,6 +34,9 @@ namespace WebApp.Models.ViewModel
                 BrandName = brand.BrandName,
                 BrandDescription = brand.BrandDescription,
                 BrandImgLogo = brand.BrandImgLogo,
+                CreatedBy = brand.CreatedBy,
+                CreatedDate = brand.CreatedDate,
+                IsDeleted = brand.IsDeleted,
             };
         }
     }
