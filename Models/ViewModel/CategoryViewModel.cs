@@ -5,6 +5,7 @@ namespace WebApp.Models.ViewModel
     public class CategoryViewModel : EntityBase
     {
         public int Id { get; set; }
+        public string Icon { get; set; } = string.Empty;
         [Display(Name = "Tên loại")]
         public string Name { get; set; } = string.Empty;
         [Display(Name = "Danh mục cha")]
@@ -18,6 +19,7 @@ namespace WebApp.Models.ViewModel
                 Id = viewModel.Id,
                 Name = viewModel.Name,
                 ParentId = viewModel.ParentId,
+                Icon = viewModel.Icon,
                 CreatedBy = viewModel.CreatedBy,
                 CreatedDate = viewModel.CreatedDate,
                 IsDeleted = viewModel.IsDeleted,
@@ -29,6 +31,7 @@ namespace WebApp.Models.ViewModel
             {
                 Id = category.Id,
                 Name = category.Name,
+                Icon = category.Icon,
                 ParentId = category.ParentId,
                 CreatedBy = category.CreatedBy,
                 CreatedDate = category.CreatedDate,
