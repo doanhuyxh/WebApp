@@ -18,6 +18,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["CurrentPage"] = "Quản Lý Sản Phẩm";
             return View();
         }
     }

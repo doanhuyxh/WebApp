@@ -26,7 +26,7 @@
                     <tr>
                         <td>@item.Id</td>
                         <td>@item.BrandName</td>
-                        <td><img src="@item.BrandImgLogo" style="width:300px; height:200px; object-fit:fill" /></td>
+                        <td><img src="@item.BrandImgLogo" class="w-50"/></td>
                         <td>@item.BrandDescription</td>
                         <td>@item.CreatedBy</td>
                         <td>@item.CreatedDate</td>
@@ -38,7 +38,7 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
     var AppVueBrand = new Vue({
         el: "#AppVueBrand",
         mounted() {
@@ -98,7 +98,6 @@
     });
 
     async function Save() {
-        $('#BigModal').addClass("show")
   
         var _data = new FormData()
         _data.append("Id", $("#Id").val())

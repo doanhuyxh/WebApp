@@ -1,9 +1,13 @@
-﻿namespace WebApp.Models.ViewModel
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApp.Models.ViewModel
 {
     public class CategoryViewModel : EntityBase
     {
         public int Id { get; set; }
+        [Display(Name = "Tên loại")]
         public string Name { get; set; } = string.Empty;
+        [Display(Name = "Danh mục cha")]
         public int ParentId { get; set; } = 0;
         public string? ParentName { get; set; }
 

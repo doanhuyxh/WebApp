@@ -10,9 +10,15 @@
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ParentId" class="control-label"></label>
-        <input asp-for="ParentId" class="form-control" />
-        <span asp-validation-for="ParentId" class="text-danger"></span>
+        <div class="form-group row">
+            <label asp-for="ParentId" class="col-sm-4 col-form-label"></label>
+            <div class="col-sm-8">
+                <select asp-for="ParentId" asp-items="@ViewBag.ParentCate" class="form-control">
+                    <option value="0" selected>--- Không  ---</option>
+                </select>
+                <span asp-validation-for="ParentId" class="text-danger"></span>
+            </div>
+        </div>
     </div>
     <div class="col-12 d-inline-flex justify-content-end">
         <button type="button" id="close" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
