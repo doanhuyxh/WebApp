@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int ParentId { get; set; } = 0;
+        public string? ParentName { get; set; }
 
         public static implicit operator Category(CategoryViewModel viewModel)
         {
