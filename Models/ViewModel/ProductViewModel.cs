@@ -6,10 +6,15 @@ namespace WebApp.Models.ViewModel
     {
         [Key]
         public int Id { get; set; }
+        public string ProductCode { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public int Price { set; get; }
+        public int Quantity { set; get; }
         public int CategoryId { get; set; }
         public int BrandId { get; set; }
+        public bool HotSale { set; get; }
+        public bool HotTrend { set; get; }
         public string Slug { get; set; } = string.Empty;
         public string Img1 { get; set; } = string.Empty;
         public string Img2 { get; set; } = string.Empty;
@@ -27,6 +32,11 @@ namespace WebApp.Models.ViewModel
                 Price = model.Price,
                 CategoryId = model.CategoryId,
                 BrandId = model.BrandId,
+                HotSale = model.HotSale,
+                HotTrend = model.HotTrend,
+                Description = model.Description,
+                Quantity = model.Quantity,
+                ProductCode = model.ProductCode,
                 Img1 = model.Img1,
                 Img2 = model.Img2,
                 Img3 = model.Img3,
@@ -46,6 +56,11 @@ namespace WebApp.Models.ViewModel
                 Price = proudct.Price,
                 CategoryId = proudct.CategoryId,
                 BrandId = proudct.BrandId,
+                HotSale = proudct.HotSale,
+                HotTrend = proudct.HotTrend,
+                Description = proudct.Description,
+                Quantity = proudct.Quantity,
+                ProductCode = proudct.ProductCode,
                 Img1 = proudct.Img1,
                 Img2 = proudct.Img2,
                 Img3 = proudct.Img3,
