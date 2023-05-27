@@ -12,7 +12,9 @@ namespace WebApp.Models.ViewModel
         public int Price { set; get; }
         public int Quantity { set; get; }
         public int CategoryId { get; set; }
+        public string? CategoryName { get; set; }
         public int BrandId { get; set; }
+        public string? BrandName { get; set; }
         public bool HotSale { set; get; }
         public bool HotTrend { set; get; }
         public string Slug { get; set; } = string.Empty;
