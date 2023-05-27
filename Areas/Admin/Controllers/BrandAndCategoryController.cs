@@ -122,6 +122,7 @@ namespace WebApp.Areas.Admin.Controllers
                      {
                          Id = cate.Id,
                          Name = cate.Name,
+                         Icon = cate.Icon,
                          ParentName = _context.Category.FirstOrDefault(item => item.Id == cate.ParentId)!.Name ?? " ",
                          CreatedBy = cate.CreatedBy,
                          CreatedDate = cate.CreatedDate,

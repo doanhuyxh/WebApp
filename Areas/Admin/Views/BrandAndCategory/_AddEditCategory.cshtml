@@ -10,7 +10,8 @@
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Icon" class="control-label"></label>
+        <label asp-for="Icon" class="control-label font-weight-bold"></label>
+        <a class="link-success float-end" href="https://fontawesome.com/search?o=r&m=free" target="_blank">link icon</a>
         <input asp-for="Icon" class="form-control" />
         <span asp-validation-for="Icon" class="text-danger"></span>
     </div>
@@ -19,7 +20,7 @@
             <label asp-for="ParentId" class="col-sm-4 col-form-label"></label>
             <div class="col-sm-8">
                 <select asp-for="ParentId" asp-items="@ViewBag.ParentCate" class="form-control">
-                    <option value="0" selected>--- Không  ---</option>
+                    <option value="0">--- Không  ---</option>
                 </select>
                 <span asp-validation-for="ParentId" class="text-danger"></span>
             </div>
