@@ -16,14 +16,18 @@ namespace WebApp.Models.AccountViewModels
         [DataType(DataType.Password)]
         public string Password { set; get; }
         [Display(Name = "Mail")]
+        [Required(ErrorMessage ="Mail không được để trống")]
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Không đúng định dạng mail")]
         public string Email { set; get; }
         [Display(Name = "Số điện thoại")]
+        [Required(ErrorMessage = "Số điện thoại không được để trống")]
         [RegularExpression(@"^(?:\+88|01)?\d{11}$", ErrorMessage = "không đúng định dạng số điện thoại")]
         public string PhoneNumber { set; get; }
         [Display(Name = "Họ")]
+        [Required(ErrorMessage = "Không được để trống")]
         public string FisrtName { set; get; }
         [Display(Name = "Tên")]
+        [Required(ErrorMessage = "Khồn được để trống")]
         public string LastName { set; get; }
         [DataType(DataType.Password)]
         [Display(Name = "Xác nhận mật khẩu")]

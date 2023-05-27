@@ -3,13 +3,12 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" id="AppVueUser">
-    <div class="col-xl-12 row mt-4">
-        <div class="col-xl-10"></div>
-        <div class="col-xl-2"><div v-on:click="AddUser" class="btn btn-success">Thêm người dùng</div></div>
+<div class="row mt-6" id="AppVueUser">
+    <div class="col-12 row">
+        <div class="col-2"><div v-on:click="AddUser" class="btn btn-success m-1">Thêm người dùng</div></div>
     </div>
-    <div class="col-xl-12 mt-5">
-        <table class="table" id="tableUser">
+    <div class="col-xl-12">
+        <table class="table table-responsive" id="tableUser">
             <thead class="bg-gradient-danger text-success">
                 <tr>
                     <th>Ảnh đại diện</th>
@@ -17,7 +16,7 @@
                     <th>Tài khoản</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
-                    <th>Hoạt động</th>
+                    <th>Kích hoạt</th>
                     <th></th>
                 </tr>
             </thead>

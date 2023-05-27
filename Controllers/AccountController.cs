@@ -54,7 +54,6 @@ namespace WebApp.Controllers
             if (result.Succeeded)
             {
                 var role = await _userManager.GetRolesAsync(user);
-
                 var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
@@ -69,7 +68,7 @@ namespace WebApp.Controllers
                 var authProperties = new AuthenticationProperties
                 {
                     IsPersistent = true, // Thiết lập cho phép lưu cookie vĩnh viễn (remember me)
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2), // Thiết lập thời gian hết hạn sau 2 giờ
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1), // Thiết lập thời gian hết hạn sau 2 giờ
                 };
 
                 // Đăng ký phiên đăng nhập hiện tại vào HttpContext
@@ -97,6 +96,8 @@ namespace WebApp.Controllers
 
                 if (result.Succeeded)
                 {
+                    // Set role member
+                    await _userManager.AddToRoleAsync(user, "Member");
                     // Automatically sign in the user
                     await _signInManager.SignInAsync(user, isPersistent: false);
 

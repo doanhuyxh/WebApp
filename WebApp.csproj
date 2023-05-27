@@ -26,9 +26,4 @@
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="wwwroot\js\user\" />
-		<Folder Include="wwwroot\lib\dataTable\" />
-	</ItemGroup>
-
 </Project>
