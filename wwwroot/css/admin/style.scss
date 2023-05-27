@@ -38,3 +38,7 @@
     left: 0;
     transform: translateY(-50%);
 }
+
+.navbar-vertical.navbar-expand-xs .navbar-collapse {
+    overflow: unset !important;
+}
