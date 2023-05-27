@@ -5,7 +5,7 @@ namespace WebApp.Models.ViewModel
     public class CategoryViewModel : EntityBase
     {
         public int Id { get; set; }
-        public string Icon { get; set; } = string.Empty;
+        public string Icon { get; set; } = "-";
         [Display(Name = "Tên loại")]
         public string Name { get; set; } = string.Empty;
         [Display(Name = "Danh mục cha")]

@@ -138,7 +138,7 @@ namespace WebApp.Areas.Admin.Controllers
             CategoryViewModel model = new CategoryViewModel();
             List<ItemDropDown> item = (from _l in _context.Category
                                        where _l.IsDeleted == false
-                                       select new ItemDropDown { Id = _l.Id, Name = _l.Name }).ToList();
+                                       select new ItemDropDown { Id = _l.Id, Name = _l.Name }).OrderByDescending(x=>x.Id).ToList();
             ViewBag.ParentCate = new SelectList(item, "Id", "Name");
             return PartialView("_AddEditCategory", model);
         }
@@ -149,7 +149,7 @@ namespace WebApp.Areas.Admin.Controllers
             CategoryViewModel model = new CategoryViewModel();
             List<ItemDropDown> item = (from _l in _context.Category
                                        where _l.IsDeleted == false
-                                       select new ItemDropDown { Id = _l.Id, Name = _l.Name }).ToList();
+                                       select new ItemDropDown { Id = _l.Id, Name = _l.Name }).OrderByDescending(x => x.Id).ToList();
             ViewBag.ParentCate = new SelectList(item, "Id", "Name");
             model = _context.Category.FirstOrDefault(item => item.Id == id);
             return PartialView("_AddEditCategory", model);
