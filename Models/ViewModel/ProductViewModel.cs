@@ -4,7 +4,6 @@ namespace WebApp.Models.ViewModel
 {
     public class ProductViewModel : EntityBase
     {
-        [Key]
         public int Id { get; set; }
         public string ProductCode { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;

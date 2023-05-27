@@ -68,7 +68,7 @@
                     cancelButtonText: "Hủy",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        fetch(`/Admin/BrandAndCategory/DeleteCategory?id=${id}`, {
+                        fetch(`/Admin/Product/DeleteProduct?id=${id}`, {
                             method: "POST"
                         })
                             .then(res => res.json())
@@ -121,7 +121,7 @@
                     title: message,
                     icon: 'info',
                 }).then(res => {
-                    window.location.reload();
+                    //window.location.reload();
                 });
             })
 

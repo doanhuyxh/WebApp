@@ -209,7 +209,7 @@ namespace WebApp.Areas.Admin.Controllers
                 jsonResultViewModel.Mesaage = "Xóa thành công";
                 return Json(jsonResultViewModel);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
             {
                 return Json(jsonResultViewModel);
             }

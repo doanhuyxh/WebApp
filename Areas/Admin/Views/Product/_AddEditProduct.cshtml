@@ -1,0 +1,88 @@
+﻿@model WebApp.Models.ViewModel.ProductViewModel
+
+<form>
+    <input hidden asp-for="Id" />
+    <input hidden asp-for="CreatedBy" />
+    <input hidden asp-for="CreatedDate" />
+    <input hidden asp-for="Img1" />
+    <input hidden asp-for="Img2" />
+    <input hidden asp-for="Img3" />
+    <div class="form-group">
+        <label asp-for="ProductCode" class="control-label"></label>
+        <input asp-for="ProductCode" class="form-control" />
+        <span asp-validation-for="ProductCode" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name"  class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Slug" class="control-label"></label>
+        <input asp-for="Slug" class="form-control" />
+        <span asp-validation-for="Slug" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Img1File1" class="control-label"></label>
+        <input asp-for="Img1File1" class="form-control" />
+        <span asp-validation-for="Img1File1" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Img1File2" class="control-label"></label>
+        <input asp-for="Img1File2" class="form-control" />
+        <span asp-validation-for="Img1File2" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Img1File3" class="control-label"></label>
+        <input asp-for="Img1File3" class="form-control" />
+        <span asp-validation-for="Img1File3" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description"  class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BrandId" class="form-label"></label>
+        <div class="container">
+            <select asp-for="BrandId" asp-items="@ViewBag.Brand" class="form-control">
+                <option value="0" selected disabled>--- Không  ---</option>
+            </select>
+            <span asp-validation-for="BrandId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="form-label"></label>
+        <div class="container">
+            <select asp-for="CategoryId" asp-items="@ViewBag.Cate" class="form-control">
+                <option value="0" selected disabled >--- Không  ---</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price"  class="form-control" type="number"/>
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Quantity" class="control-label"></label>
+        <input asp-for="Quantity" class="form-control" type="numbe" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+    <div class="form-check">
+        <label asp-for="HotSale" class="form-check-label"></label>
+        <input asp-for="HotSale" type="checkbox" class="form-check-input" />
+        <span asp-validation-for="HotSale" class="text-danger"></span>
+    </div>
+    <div class="form-check">
+        <label asp-for="HotTrend" class="form-check-label"></label>
+        <input asp-for="HotTrend" type="checkbox" class="form-check-input" />
+        <span asp-validation-for="HotTrend" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 d-inline-flex justify-content-end">
+        <button type="button" id="close" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="Save()">Lưu thay đổi</button>
+    </div>
+</form>
