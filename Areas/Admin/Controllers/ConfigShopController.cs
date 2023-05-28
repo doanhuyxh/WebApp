@@ -9,7 +9,6 @@ namespace WebApp.Areas.Admin.Controllers
     public class ConfigShopController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ConfigShop _configShopSettings;
 
         public ConfigShopController(IConfiguration configuration)
         {
@@ -31,7 +30,7 @@ namespace WebApp.Areas.Admin.Controllers
             cnf.ImgSlie2 = _configuration["ConfigShop:ImgSlie2"];
             cnf.ImgSlie3 = _configuration["ConfigShop:ImgSlie3"];
             cnf.LinkChatFaceBook = _configuration["ConfigShop:LinkChatFaceBook"];
-            cnf.TitileWeb = _configuration["ConfigShop:TitileWeb"];
+            cnf.TitleWeb = _configuration["ConfigShop:TitleWeb"];
             cnf.BannerRight1 = _configuration["ConfigShop:BannerRight1"];
             cnf.BannerRight2 = _configuration["ConfigShop:BannerRight2"];
             cnf.BannerRight3 = _configuration["ConfigShop:BannerRight3"];
@@ -42,20 +41,5 @@ namespace WebApp.Areas.Admin.Controllers
             return View(cnf);
         }
 
-        // Phương thức để lưu các giá trị cập nhật vào appsettings.json
-        [HttpPost]
-        public IActionResult Save(ConfigShop updatedSettings)
-        {
-            // Lưu các giá trị cập nhật vào thuộc tính _configShopSettings
-            _configShopSettings.LoGo = updatedSettings.LoGo;
-            _configShopSettings.PhoneNumber = updatedSettings.PhoneNumber;
-            _configShopSettings.Mail = updatedSettings.Mail;
-            // Các giá trị khác tương tự
-
-            // Lưu các giá trị cập nhật vào appsettings.json
-            _configuration.GetSection("ConfigShop").Bind(_configShopSettings);
-
-            return RedirectToAction("Index");
-        }
     }
 }

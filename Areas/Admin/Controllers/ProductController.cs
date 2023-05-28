@@ -23,7 +23,7 @@ namespace WebApp.Areas.Admin.Controllers
         public IActionResult Index()
         {
             ViewData["CurrentPage"] = "Quản Lý Sản Phẩm";
-            var product = from _sp in _context.Proudct
+            var product = from _sp in _context.Product
                           where _sp.IsDeleted == false
                           select new ProductViewModel
                           {
@@ -39,6 +39,7 @@ namespace WebApp.Areas.Admin.Controllers
                               Img3 = _sp.Img3,
                               Price = _sp.Price,
                               ProductCode = _sp.ProductCode,
+                              Stop = _sp.Stop,
                               CategoryName = _context.Category.FirstOrDefault(i => i.Id == _sp.CategoryId)!.Name ?? "",
                               BrandName = _context.Brand.FirstOrDefault(i => i.Id == _sp.BrandId)!.BrandName ?? "",
                           };
@@ -64,7 +65,7 @@ namespace WebApp.Areas.Admin.Controllers
             ProductViewModel model = new ProductViewModel();
             if (id != 0)
             {
-                model = _context.Proudct.FirstOrDefault(i => i.Id == id);
+                model = _context.Product.FirstOrDefault(i => i.Id == id);
                 return PartialView("_AddEditProduct", model);
             }
             else
@@ -82,7 +83,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 if (model.Id != 0)
                 {
-                    Proudct pd = _context.Proudct.FirstOrDefault(p => p.Id == model.Id);
+                    Product pd = _context.Product.FirstOrDefault(p => p.Id == model.Id);
                     _context.Entry(pd).CurrentValues.SetValues(model);
                     _context.SaveChanges();
                     jsonResultViewModel.Success = true;
@@ -92,7 +93,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 else
                 {
-                    Proudct pd = new Proudct();
+                    Product pd = new Product();
                     pd = model;
                     pd.CreatedBy = HttpContext.User.Identity.Name;
                     pd.CreatedDate = DateTime.Now;
@@ -120,7 +121,7 @@ namespace WebApp.Areas.Admin.Controllers
             jsonResultViewModel.Object = null;
             try
             {
-                var product = _context.Proudct.Find(id);
+                var product = _context.Product.Find(id);
                 product.IsDeleted = true;
                 _context.Update(product);
                 _context.SaveChanges();
@@ -136,8 +137,9 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult ChangeHotSale(int id) {
-            Proudct pd = _context.Proudct.FirstOrDefault(p => p.Id == id);
+        public IActionResult ChangeHotSale(int id)
+        {
+            Product pd = _context.Product.FirstOrDefault(p => p.Id == id);
             if (pd != null)
             {
                 pd.HotSale = !pd.HotSale;
@@ -151,11 +153,28 @@ namespace WebApp.Areas.Admin.Controllers
             }
         }
         [HttpGet]
-        public IActionResult ChangeHotTrend(int id) {
-            Proudct pd = _context.Proudct.FirstOrDefault(p => p.Id == id);
+        public IActionResult ChangeHotTrend(int id)
+        {
+            Product pd = _context.Product.FirstOrDefault(p => p.Id == id);
             if (pd != null)
             {
                 pd.HotTrend = !pd.HotTrend;
+                _context.Update(pd);
+                _context.SaveChanges();
+                return Ok(pd);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet]
+        public IActionResult StopProduct(int id)
+        {
+            Product pd = _context.Product.FirstOrDefault(p => p.Id == id);
+            if (pd != null)
+            {
+                pd.Stop = !pd.Stop;
                 _context.Update(pd);
                 _context.SaveChanges();
                 return Ok(pd);

@@ -2,7 +2,7 @@
 
 namespace WebApp.Models
 {
-    public class Proudct : EntityBase
+    public class Product : EntityBase
     {
         [Key]
         public int Id { get; set; }
@@ -19,5 +19,6 @@ namespace WebApp.Models
         public string Img1 { get; set; } = string.Empty;
         public string Img2 { get; set; } = string.Empty;
         public string Img3 { get; set; } = string.Empty;
+        public bool Stop { set; get; }
     }
 }

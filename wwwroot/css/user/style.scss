@@ -1,3 +1,69 @@
-﻿.offcanvas-backdrop.show {
-  opacity: 0;
+﻿* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+body {
+    color: #333;
+    font-family: 'Mulish',sans-serif;
+    background: #f5f5f5;
+    position: relative;
+    font-size: 14px;
+    min-width: 1212px;
+    word-break: break-word;
+    counter-reset: section;
+}
+
+.bg-light1 {
+    background-color: #fff !important;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.bg-light1 ul li {
+    padding: 2em 0em;
+    display: flex;
+    align-items: center;
+    width: 10.8vw;
+}
+
+.bg-light1 ul li a {
+    margin-left: 10px;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.bg-light1 li:hover {
+    background: #29A07E;
+}
+
+#banner1-head {
+    background-image: url('https://lacdau.com/static/assets/default/images/home-bg-collection.png')
+}
+
+#banner1-head ul {
+    display: inline;
+}
+
+#banner1-head ul li {
+    display: inline;
+    padding: 0px 12px 0px 12px;
+    border-right: 1px solid #fff;
+}
+
+#banner1-head ul li:last-child {
+    border-right: none;
+}
+
+.width_100 {
+    width: 100%;
 }

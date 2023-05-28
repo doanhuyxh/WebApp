@@ -77,7 +77,16 @@ namespace WebApp.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return Redirect("/Admin/Dashboard/Index");
+
+                if (role.Contains("SuperAdmin") || role.Contains("Admin"))
+                {
+                    return Redirect("/Admin/Dashboard/Index");
+                }             
+                else
+                {
+                    // Vai trò không được xác định hoặc không có chuyển hướng tương ứng
+                    return Redirect("/Home/Index");
+                }
             }
             else
             {

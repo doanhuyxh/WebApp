@@ -11,6 +11,7 @@ namespace WebApp.Data
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Brand> Brand { get; set; }
         public DbSet<Category> Category { get; set; }
-        public DbSet<Proudct> Proudct { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<Order> Order { get; set; }
     }
 }

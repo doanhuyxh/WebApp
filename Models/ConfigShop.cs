@@ -11,7 +11,7 @@
         public string ImgSlie2 { get; set; } = string.Empty;
         public string ImgSlie3 { get; set; } = string.Empty;
         public string LinkChatFaceBook { get; set; } = string.Empty;
-        public string TitileWeb { get; set; } = string.Empty;
+        public string TitleWeb { get; set; } = string.Empty;
         public string BannerRight1 { get; set; } = string.Empty;
         public string BannerRight2 { get; set; } = string.Empty;
         public string BannerRight3 { get; set; } = string.Empty;

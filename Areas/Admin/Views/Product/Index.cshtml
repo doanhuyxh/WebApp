@@ -11,7 +11,7 @@
         <table class="table table-striped table-responsive text-center" id="tableProduct">
             <thead class="bg-gradient-danger text-success">
                 <tr>
-                    <th>STT</th>
+                    <th>ID</th>
                     <th>Ảnh</th>
                     <th>Mã sản phẩm</th>
                     <th>Tên Sản phẩm</th>
@@ -28,41 +28,52 @@
                 @foreach (var item in ViewBag.Product)
                 {
                     <tr>
-                        <td>STT</td>
+                        <td>@item.Id</td>
                         <td>
-                            <div class="container-fluid">
-                                <img src="@item.Img1" class="w-10">
-                                <img src="@item.Img2" class="w-10">
-                                <img src="@item.Img2" class="w-10">
+                            <div class="container_img">
+                                <img src="@item.Img1" class="w-50">
+                                <img src="@item.Img2" class="w-50">
+                                <img src="@item.Img2" class="w-50">
                             </div>
                         </td>
                         <td>@item.ProductCode</td>
                         <td>@item.Name</td>
                         <td>@item.Slug</td>
-                        <td>@item.Description</td>
+                        <td><p class="text_width">@item.Description</p></td>
                         <td>@item.Price</td>
                         <td>
                             @if (item.HotSale)
                             {
-                                <span class="btn btn-success">Đang bật</span>
+                                <span class="btn btn-success" v-on:click="ChangeHotSale(@item.Id)">Đang bật</span>
                             }
                             else
                             {
-                                <span class="btn btn-danger">Đang tắt</span>
+                                <span class="btn btn-danger" v-on:click="ChangeHotSale(@item.Id)">Đang tắt</span>
                             }
                         </td>
                         <td>
                             @if (item.HotTrend)
                             {
-                                <span class="btn btn-success">Đang bật</span>
+                                <span class="btn btn-success" v-on:click="ChangeHotTrend(@item.Id)">Đang bật</span>
                             }
                             else
                             {
-                                <span class="btn btn-danger">Đang tắt</span>
+                                <span class="btn btn-danger" v-on:click="ChangeHotTrend(@item.Id)">Đang tắt</span>
                             }
                         </td>
                         <td>@item.Quantity</td>
-                        <td><button class="btn btn-warning m-1" type="button" v-on:click="EditProduct(@item.Id)">Sửa</button><button class="btn btn-danger m-1" type="button" v-on:click="DeleteProduct(@item.Id)">Xóa</button></td>
+                        <td>
+                            @if (item.Stop)
+                            {
+                                <button class="btn btn-danger m-1" type="button" v-on:click="StopProduct(@item.Id)">Ngừng bán</button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-success m-1" type="button" v-on:click="StopProduct(@item.Id)">Mở bán</button>
+                            }
+                            <button class="btn btn-warning m-1" type="button" v-on:click="EditProduct(@item.Id)">Sửa</button>
+                            <button class="btn btn-danger m-1" type="button" v-on:click="DeleteProduct(@item.Id)">Xóa</button>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -123,7 +134,20 @@
                     }
 
                 })
+            },
+            ChangeHotSale(id) {
+                fetch("/Admin/Product/ChangeHotSale?id=" + id)
+                    .then(res => { window.location.reload() })
+            },
+            ChangeHotTrend(id) {
+                fetch("/Admin/Product/ChangeHotTrend?id=" + id)
+                    .then(res => { window.location.reload() })
+            },
+            StopProduct(id) {
+                fetch("/Admin/Product/StopProduct?id=" + id)
+                    .then(res => { window.location.reload() })
             }
+
         }
     });
 
@@ -142,6 +166,7 @@
         _data.append("HotSale", $("#HotSale").val())
         _data.append("HotTrend", $("#HotTrend").val())
         _data.append("Slug", $("#Slug").val())
+        _data.append("Stop", 0)
 
 
         let file1 = document.getElementById("Img1File1").files[0]

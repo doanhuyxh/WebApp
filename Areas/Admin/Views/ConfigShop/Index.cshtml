@@ -3,26 +3,159 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @model WebApp.Models.ConfigShop;
+<div class="container-fluid text-center mt-4">
+    <div class="row">
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 20rem;">
+                <img src="@Model.LoGo" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">LoGo</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card w-80 m-auto">
+                <div class="card-body">
+                    <h6 class="card-title">Tên Shop</h6>
+                    <p class="card-text font-weight-bold">@Model.TitleWeb</p>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card w-80 m-auto">
+                <div class="card-body">
+                    <h6 class="card-title">Giờ làm việc</h6>
+                    <p class="card-text font-weight-bold">@Model.TimeOnline</p>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card w-80 m-auto">
+                <div class="card-body">
+                    <h6 class="card-title">Số điện thoại</h6>
+                    <p class="card-text font-weight-bold">@Model.PhoneNumber</p>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card w-80 m-auto">
+                <div class="card-body">
+                    <h6 class="card-title">Địa chỉ</h6>
+                    <p class="card-text font-weight-bold">@Model.Address</p>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card w-80 m-auto">
+                <div class="card-body">
+                    <h6 class="card-title">Link chat</h6>
+                    <p class="card-text font-weight-bold">@Model.LinkChatFaceBook</p>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card w-90 m-auto">
+                <div class="card-body">
+                    <h6 class="card-title">Địa chỉ mail</h6>
+                    <p class="card-text font-weight-bold">@Model.Mail</p>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
 
-@Model.LoGo,
-@Model.PhoneNumber,
-@Model.Mail,
-@Model.Address,
-@Model.TimeOnline,
-@Model.ImgSlie1,
-@Model.ImgSlie2,
-@Model.ImgSlie3,
-@Model.LinkChatFaceBook,
-@Model.TitileWeb,
-@Model.BannerRight1,
-@Model.BannerRight2,
-@Model.BannerRight3,
-@Model.BannerButton1,
-@Model.BannerButton2,
-@Model.BannerButton3
-
-<div class="container mt-4 bg-danger">
-    <div class="row-border">
-        
+    </div>
+    <div class="row mt-2">
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.ImgSlie1" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Slide 1</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.ImgSlie2" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Slide 2</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.ImgSlie3" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Slide 3</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.BannerRight1" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Banner trái 1</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.BannerRight2" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Banner trái 2</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.BannerRight3" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Banner trái 3</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.BannerButton1" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Banner dưới 1</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.BannerButton2" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Banner dưới 2</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+        <div class="col align-content-center justify-content-center">
+            <div class="card m-auto" style="width: 30rem;">
+                <img src="@Model.BannerButton3" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Banner dưới 3</h5>
+                    <button type="button" class="btn btn-danger">Thay đổi</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
