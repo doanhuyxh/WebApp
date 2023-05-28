@@ -38,9 +38,9 @@ namespace WebApp.Models.ViewModel
         [Display(Name = "Ảnh 3")]
         public IFormFile? Img1File3 { get; set; }
 
-        public static implicit operator Proudct(ProductViewModel model)
+        public static implicit operator Product(ProductViewModel model)
         {
-            return new Proudct
+            return new Product
             {
                 Id = model.Id,
                 Name = model.Name,
@@ -63,7 +63,7 @@ namespace WebApp.Models.ViewModel
             };
         }
 
-        public static implicit operator ProductViewModel(Proudct proudct)
+        public static implicit operator ProductViewModel(Product proudct)
         {
             return new ProductViewModel
             {
