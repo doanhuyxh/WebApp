@@ -41,7 +41,7 @@ namespace WebApp.Areas.Admin.Controllers
                               ProductCode = _sp.ProductCode,
                               Stop = _sp.Stop,
                               CategoryName = _context.Category.FirstOrDefault(i => i.Id == _sp.CategoryId)!.Name ?? "",
-                              BrandName = _context.Brand.FirstOrDefault(i => i.Id == _sp.BrandId)!.BrandName ?? "", 
+                              BrandName = _context.Brand.FirstOrDefault(i => i.Id == _sp.BrandId)!.BrandName ?? "",
                           };
 
             ViewBag.Product = product.ToList();
@@ -54,7 +54,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             List<ItemDropDown> itemCate = (from _l in _context.Category
                                            where _l.IsDeleted == false
-                                           select new ItemDropDown { Id = _l.Id, Name = _l.Name }).ToList();
+                                           select new ItemDropDown { Id = _l.Id, Name = _l.Name, ParentId = _l.ParentId }).ToList();
             ViewBag.Cate = new SelectList(itemCate, "Id", "Name");
 
             List<ItemDropDown> itemBrand = (from _l in _context.Brand

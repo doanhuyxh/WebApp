@@ -48,11 +48,21 @@
 }
 
 .text_width {
-  width: 300px;
+  width: 200px;
   overflow: auto;
 }
 
 .container_img {
-  width: 320px;
+  width: 200px;
   overflow: auto;
+}
+
+.Slug_and_Name_width {
+  width: 150px;
+  overflow: scroll;
+}
+
+.width_code {
+  width: 15px !important;
+  text-align: center;
 }

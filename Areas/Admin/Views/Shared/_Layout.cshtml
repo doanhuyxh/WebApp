@@ -33,6 +33,7 @@
     <!--Chart Js-->
     <script src="~/lib/chart.min.js"></script>
 
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!--css và js tự code-->
     <link href="~/css/admin/style.min.css" rel="stylesheet" />
@@ -50,9 +51,11 @@
         @await Html.PartialAsync("_Navbar")
         @RenderBody()
     </main>
+
+
+
     <partial name="~/Areas/Admin/Views/UIComponentsModel/_BigModal.cshtml" />
     <partial name="~/Areas/Admin/Views/UIComponentsModel/_SmallModel.cshtml" />
-
     <partial name="~/Areas/Admin/Views/Shared/_ValidationScriptsPartial.cshtml" />
     <!-- Github buttons -->
     <script src="~/lib/github_buttons.js"></script>
