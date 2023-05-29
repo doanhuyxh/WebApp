@@ -166,7 +166,7 @@
         _data.append("HotSale", $("#HotSale").val())
         _data.append("HotTrend", $("#HotTrend").val())
         _data.append("Slug", $("#Slug").val())
-        _data.append("Stop", 0)
+        _data.append("Stop", false)
 
 
         let file1 = document.getElementById("Img1File1").files[0]
@@ -195,12 +195,21 @@
             .then(res => res.json())
             .then(data => {
                 var message = data.mesaage;
-                Swal.fire({
-                    title: message,
-                    icon: 'info',
-                }).then(res => {
-                    window.location.reload();
-                });
+                if (data.Success) {
+                    Swal.fire({
+                        title: message,
+                        icon: 'info',
+                    }).then(res => {
+                        window.location.reload();
+                    });
+                }else{
+                    Swal.fire({
+                        title: message,
+                        icon: 'info',
+                    }).then(res => {
+                        return;
+                    });
+                }
             });
 
     };

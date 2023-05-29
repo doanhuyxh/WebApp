@@ -41,7 +41,7 @@ namespace WebApp.Areas.Admin.Controllers
                               ProductCode = _sp.ProductCode,
                               Stop = _sp.Stop,
                               CategoryName = _context.Category.FirstOrDefault(i => i.Id == _sp.CategoryId)!.Name ?? "",
-                              BrandName = _context.Brand.FirstOrDefault(i => i.Id == _sp.BrandId)!.BrandName ?? "",
+                              BrandName = _context.Brand.FirstOrDefault(i => i.Id == _sp.BrandId)!.BrandName ?? "", 
                           };
 
             ViewBag.Product = product.ToList();
@@ -100,7 +100,7 @@ namespace WebApp.Areas.Admin.Controllers
                     _context.Add(pd);
                     _context.SaveChanges();
                     jsonResultViewModel.Success = true;
-                    jsonResultViewModel.Mesaage = "Đã cập nhật thành công";
+                    jsonResultViewModel.Mesaage = "Đã thêm thành công";
                     jsonResultViewModel.Object = model;
                     return Json(jsonResultViewModel);
                 }

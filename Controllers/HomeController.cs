@@ -4,6 +4,7 @@ using System.Diagnostics;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.ViewModel;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebApp.Controllers
 {
@@ -130,7 +131,7 @@ namespace WebApp.Controllers
             }
         }
         [HttpGet]
-        public IActionResult SearchProduct(string query)
+        public IActionResult SearchProductByQuery(string query)
         {
             JsonResultViewModel jsonResult = new JsonResultViewModel();
             try
@@ -247,6 +248,44 @@ namespace WebApp.Controllers
                 jsonResult.Success = true;
                 jsonResult.Mesaage = "Đã xoá";
                 jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+            catch (Exception ex)
+            {
+                jsonResult.Success = false;
+                jsonResult.Mesaage = ex.Message;
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+        }
+        [HttpGet]
+        public IActionResult SearchByCateGoryries(int cateId)
+        {
+            JsonResultViewModel jsonResult = new JsonResultViewModel();
+            try
+            {
+                var ds = from pd in _context.Product
+                         where (pd.IsDeleted == false && pd.Stop == false) && pd.CategoryId == cateId
+                         select new ProductViewModel
+                         {
+                             Id = pd.Id,
+                             Name = pd.Name,
+                             Description = pd.Description,
+                             Slug = pd.Slug,
+                             Quantity = pd.Quantity,
+                             HotSale = pd.HotSale,
+                             HotTrend = pd.HotTrend,
+                             Img1 = pd.Img1,
+                             Img2 = pd.Img2,
+                             Img3 = pd.Img3,
+                             Price = pd.Price,
+                             ProductCode = pd.ProductCode,
+                             CategoryName = _context.Category.FirstOrDefault(i => i.Id == pd.CategoryId)!.Name ?? "",
+                             BrandName = _context.Brand.FirstOrDefault(i => i.Id == pd.BrandId)!.BrandName ?? "",
+                         };
+                jsonResult.Success = true;
+                jsonResult.Object = ds.ToList();
+                jsonResult.Mesaage = "Lấy thành công HotTrend";
                 return Json(jsonResult);
             }
             catch (Exception ex)

@@ -3,11 +3,10 @@
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 m-auto">
         <form method="post" action="/Account/Register">
             <h2>Tạo tài khoản mới</h2>
             <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-floating">
                 <input asp-for="UserName" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="UserName"></label>
@@ -23,7 +22,7 @@
                 <label asp-for="ConfirmPassword"></label>
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Đăng ký</button>
         </form>
     </div>
 </div>
