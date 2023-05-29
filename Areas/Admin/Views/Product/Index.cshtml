@@ -3,7 +3,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div id="AppProduct" class="row mt-1">
+<div id="AppProduct" class="row mt-6">
     <div class="col-12">
         <div class="col-xl-2 col-lg-12"><button type="button" v-on:click="AddProduct()" class="btn btn-success">Thêm loại sản phẩm</button></div>
     </div>
@@ -40,7 +40,7 @@
                                 <img src="@item.Img2" class="w-50">
                             </div>
                         </td>
-                        <td>
+                        <td >
                             <p class="width_code">
                                 @item.ProductCode
                             </p>
@@ -96,16 +96,18 @@
                                     <li class="text-center">
                                         @if (item.Stop)
                                         {
-                                            <button class="btn btn-success m-auto" type="button" v-on:click="StopProduct(@item.Id)">Mở bán</button>
+                                            <button class="btn btn-success m-auto mb-1" type="button" v-on:click="StopProduct(@item.Id)">Mở bán</button>
                                         }
                                         else
                                         {
-                                            <button class="btn btn-danger m-auto" type="button" v-on:click="StopProduct(@item.Id)">Ngừng bán</button>
+                                            <button class="btn btn-danger m-automb-1" type="button" v-on:click="StopProduct(@item.Id)">Ngừng bán</button>
                                         }
                                     </li>
                                     <li class="text-center">
-                                        <button class="btn btn-warning m-auto" type="button" v-on:click="EditProduct(@item.Id)">Sửa</button>
-                                        <button class="btn btn-danger m-auto" type="button" v-on:click="DeleteProduct(@item.Id)">Xóa</button>
+                                        <button class="btn btn-warning m-auto mb-1" type="button" v-on:click="EditProduct(@item.Id)">Sửa</button>
+                                    </li>
+                                    <li class="text-center">
+                                        <button class="btn btn-danger m-auto mb-1" type="button" v-on:click="DeleteProduct(@item.Id)">Xóa</button>
                                     </li>
                                 </ul>
                             </div>
@@ -278,6 +280,7 @@
             paging: true,
             select: true,
             autoFill: true,
+            "pageLength": 8,
             "order": [[0, "desc"]],
             dom: 'Bfrtip',
             'columnDefs': [{

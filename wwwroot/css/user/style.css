@@ -90,10 +90,24 @@ ul {
   height: 20px;
 }
 
+.footer-infor-item .box-title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 17px;
+}
+
 .footer-logo {
   margin-bottom: 20px;
 }
 .footer-logo img {
   max-height: 85px;
   width: auto;
+}
+
+.home-p-category-group {
+  background: -webkit-gradient(linear, right top, left top, color-stop(2.54%, #FFC34E), color-stop(86.96%, #FF8B49));
+  background: linear-gradient(270deg, #FFC34E 2.54%, #FF8B49 86.96%);
+  border-radius: 20px;
+  padding: 15px 12px 0;
 }

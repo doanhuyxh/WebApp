@@ -49,7 +49,9 @@
     @await Html.PartialAsync("_Sitebar")
     <main class="main-content position-relative border-radius-lg ">
         @await Html.PartialAsync("_Navbar")
-        @RenderBody()
+        <div class="container-fluid overflow-hidden">
+            @RenderBody()
+        </div>
     </main>
 
 
