@@ -67,3 +67,33 @@ ul {
 .width_100 {
     width: 100%;
 }
+.footer-info-group {
+    padding: 14px 0;
+}
+.footer-info-group .footer-address-item {
+    line-height: 16px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    p {
+        margin-bottom: 1rem;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+    i {
+        width: 25px;
+        height: 20px;
+    }
+}
+
+.footer-logo {
+    margin-bottom: 20px;
+    
+    img{
+      max-height:85px;
+      width:auto;
+    }
+}
