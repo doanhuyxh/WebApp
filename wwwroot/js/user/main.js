@@ -22,12 +22,4 @@ $(document).ready(function () {
 
         })
     //các code khác viết ở dưới
-    $(".owl-carousel").owlCarousel({
-        items: 4, // Số slide hiển thị trên một lần cuộn
-        loop: true, // Lặp lại carousel
-        nav: true, // Hiển thị nút điều hướng
-        dots: true,
-        autoplay: true // Hiển thị điểm đánh dấu
-        // Các tùy chọn khác cho Owl Carousel 2
-    });
 });

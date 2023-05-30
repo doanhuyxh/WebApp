@@ -1,176 +1,243 @@
-﻿<section id="main-two">
-    <div class="container" id="banner1-head">
-        <div class="text-center text-light pt-4">
-            <h3 style="font-weight: 600;">HÀNG SALE THANH LÝ ĐẶC BIỆT MỪNG 200.000 LIKE FANPAGE FACEBOOK</h3>
+﻿<div class="container-fluid" id="AppHomeVue">
 
-        </div>
-        <div class="text-center text-light mb-4">
-            <ul>
-                <li>CHUỘT GAMING</li>
-                <li>CHUỘT GAMING</li>
-                <li>CHUỘT GAMING</li>
-                <li>CHUỘT GAMING</li>
-                <li>CHUỘT GAMING</li>
-                <li>CHUỘT GAMING</li>
-            </ul>
-        </div>
-        <div class="owl-carousel">
-            <div class="item">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title and make
-                            up the
-                            bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+    <section id="main-two">
+        <div class="container" id="banner1-head">
+            <div class="text-center text-light pt-4">
+                <h3 style="font-weight: 600;">HÀNG SALE THANH LÝ ĐẶC BIỆT MỪNG 200.000 LIKE FANPAGE FACEBOOK</h3>
+
+            </div>
+            <div class="text-center text-light mb-4">
+                <ul>
+                    <li>CHUỘT GAMING</li>
+                    <li>CHUỘT GAMING</li>
+                    <li>CHUỘT GAMING</li>
+                    <li>CHUỘT GAMING</li>
+                    <li>CHUỘT GAMING</li>
+                    <li>CHUỘT GAMING</li>
+                </ul>
+            </div>
+            <div class="owl-carousel">
+                <div class="item" v-for="(item, _index) in _HotTrend" :key="_index">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" :src="item.img1" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.productCode}}</h5>
+                            <p class="card-text">
+                                {{item.name}}
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="item">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title and make
-                            up the
-                            bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">
-                        Some quick example text to build on the card title and make up
-                        the
-                        bulk of the card's content.
-                    </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
 
+            </div>
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-light">Xem thêm</button>
+            </div>
         </div>
-        <div class="text-center mt-4">
-            <button class="btn btn-outline-light">Xem thêm</button>
-        </div>
-    </div>
 
-</section>
-
-<section id="main-three">
-    <div class="container home-p-category-group" id="banner1-head">
-        <div class="text-center text-light pt-4">
-            <h3 style="font-weight: 600;">Xu hướng mua sắm</h3>
-
-        </div>
-        <div class="owl-carousel">
-            <div class="item">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title and make
-                            up the
-                            bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title and make
-                            up the
-                            bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">
-                        Some quick example text to build on the card title and make up
-                        the
-                        bulk of the card's content.
-                    </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-
-        </div>
-        <div class="text-center mt-4">
-            <button class="btn btn-outline-light">Xem thêm</button>
-        </div>
-    </div>
-
-</section>
-
-<section id="main-foure">
-    <div class="container" id="banner1-head">
-        <div class="text-center text-light pt-4">
-            <h3 style="font-weight: 600;">Lót chuột</h3>
-
-        </div>
-        <div class="owl-carousel">
-            <div class="item">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title and make
-                            up the
-                            bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title and make
-                            up the
-                            bulk of the card's content.
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="./assets/img/anh1.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">
-                        Some quick example text to build on the card title and make up
-                        the
-                        bulk of the card's content.
-                    </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-
-        </div>
-        <div class="text-center mt-4">
-            <button class="btn btn-outline-light">Xem thêm</button>
-        </div>
-    </div>
     </section>
+
+    <section id="main-three">
+        <div class="container home-p-category-group">
+            <div class="text-center text-light pt-4">
+                <h3 style="font-weight: 600;">Xu hướng mua sắm</h3>
+
+            </div>
+            <div class="owl-carousel">
+                <div class="item" v-for="(item, _index) in _HotSale" :key="_index">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" :src="item.img1" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.productCode}}</h5>
+                            <p class="card-text">
+                                {{item.name}}
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-light">Xem thêm</button>
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+        <div class="container home-box-group">
+            <div class="text-center text-light pt-4">
+                <h3 style="font-weight: 600;">Lót chuột</h3>
+
+            </div>
+            <div class="owl-carousel">
+                <div class="item">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://lacdau.com/media/product/250-1391-53424e5247a21b79417d566bc2869499.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">
+                                Some quick example text to build on the card title and make
+                                up the
+                                bulk of the card's content.
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://lacdau.com/media/product/250-1391-53424e5247a21b79417d566bc2869499.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">
+                                Some quick example text to build on the card title and make
+                                up the
+                                bulk of the card's content.
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="https://lacdau.com/media/product/250-1391-53424e5247a21b79417d566bc2869499.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">
+                            Some quick example text to build on the card title and make up
+                            the
+                            bulk of the card's content.
+                        </p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-light">Xem thêm</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container home-box-group">
+            <div class="text-center text-light pt-4">
+                <h3 style="font-weight: 600;">Lót chuột</h3>
+
+            </div>
+            <div class="owl-carousel">
+                <div class="item">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://lacdau.com/media/product/250-1391-53424e5247a21b79417d566bc2869499.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">
+                                Some quick example text to build on the card title and make
+                                up the
+                                bulk of the card's content.
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="https://lacdau.com/media/product/250-1391-53424e5247a21b79417d566bc2869499.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">
+                                Some quick example text to build on the card title and make
+                                up the
+                                bulk of the card's content.
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="https://lacdau.com/media/product/250-1391-53424e5247a21b79417d566bc2869499.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">
+                            Some quick example text to build on the card title and make up
+                            the
+                            bulk of the card's content.
+                        </p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-light">Xem thêm</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="text/javascript">
+    var AppHomeVue = new Vue({
+        el: "#AppHomeVue",
+        data: {
+            HotSale: [],
+            HotTrend: [],
+            MousePads: [],
+            Mouse: [],
+        },
+        mounted() {
+            this.CallData();
+        },
+        computed: {
+            _HotTrend() {
+                return this.HotTrend;
+            },
+            _HotSale() {
+                return this.HotSale;
+            }
+        },
+        updated() {
+            this.initCarousel();
+        },
+        methods: {
+            CallData() {
+                fetch("/Home/GetProductHotTrend")
+                    .then(res => res.json())
+                    .then(data => {
+                        this.HotTrend = data.object;
+                        this.checkRenderedCarousel();
+                    });
+
+                fetch("/Home/GetProductHotSale")
+                    .then(res => res.json())
+                    .then(data => {
+                        this.HotSale = data.object;
+                        this.checkRenderedCarousel();
+                    });
+
+
+            },
+            checkRenderedCarousel() {
+                // Kiểm tra xem cả hai carousel đã được render hoàn tất chưa
+                if (this.HotTrend.length > 0 && this.HotSale.length > 0) {
+                    this.initCarousel();
+                }
+            },
+            initCarousel() {
+                setTimeout(function () {
+                    $(".owl-carousel").owlCarousel({
+                        items: 4,
+                        loop: true,
+                        nav: false,
+                        dots: true,
+                        autoplay: true
+
+                    });
+                }, 100)
+
+            }
+
+        }
+    })
+</script>
