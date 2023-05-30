@@ -206,7 +206,7 @@
                     .then(res => res.json())
                     .then(data => {
                         this.HotTrend = data.object;
-                        this.checkRenderedCarousel();
+                        this.checkRenderedCarousel();    
                     });
 
                 fetch("/Home/GetProductHotSale")
