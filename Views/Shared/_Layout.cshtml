@@ -31,12 +31,14 @@
 <body>
     <div class="container-fluid">
         <main role="main" class="pb-3">
-            <partial name="Header"/>
-            @RenderBody()
-            <partial name="Footer"/>
+            <partial name="Header" />
+            <div class="container">
+                @RenderBody()
+            </div>
+            <partial name="Footer" />
         </main>
     </div>
-    
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

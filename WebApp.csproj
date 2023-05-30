@@ -7,10 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="Views\Home\Cart.cshtml" />
-	  <Content Remove="Views\Shared\Header.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
@@ -31,18 +27,18 @@
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-	  <UpToDateCheckInput Remove="Views\Shared\Header.cshtml" />
+		<UpToDateCheckInput Remove="Views\Shared\Header.cshtml" />
 	</ItemGroup>
 	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Views\Home\Cart.cshtml" />
-	  <_ContentIncludedByDefault Remove="Views\Shared\Header.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Home\Cart.cshtml" />
+		<_ContentIncludedByDefault Remove="Views\Shared\Header.cshtml" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Include="Views\Home\Cart.cshtml" />
-	  <None Include="Views\Shared\Header.cshtml" />
+		<None Include="Views\Home\Cart.cshtml" />
+		<None Include="Views\Shared\Header.cshtml" />
 	</ItemGroup>
 	<ItemGroup>
-	  <UpToDateCheckInput Remove="Views\Home\Cart.cshtml" />
+		<UpToDateCheckInput Remove="Views\Home\Cart.cshtml" />
 	</ItemGroup>
 
 </Project>
