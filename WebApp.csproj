@@ -26,19 +26,5 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
 	</ItemGroup>
-	<ItemGroup>
-		<UpToDateCheckInput Remove="Views\Shared\Header.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-		<_ContentIncludedByDefault Remove="Views\Home\Cart.cshtml" />
-		<_ContentIncludedByDefault Remove="Views\Shared\Header.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="Views\Home\Cart.cshtml" />
-		<None Include="Views\Shared\Header.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-		<UpToDateCheckInput Remove="Views\Home\Cart.cshtml" />
-	</ItemGroup>
 
 </Project>
