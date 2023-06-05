@@ -34,6 +34,10 @@ $Banner_2_backgroud: linear-gradient(270deg,#FFC34E 2.54%,#FF8B49 86.96%);
 a {
     color: #333;
     text-decoration: none;
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 body {

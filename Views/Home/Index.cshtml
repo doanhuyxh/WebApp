@@ -9,7 +9,7 @@
                 <div class="item_s_1" v-for="(item, index) in _HotTrend" :key="index">
                     <div class="item1">
                         <a href="" class="item_img1">
-                            <img src="https://lacdau.com/media/product/250-1347-df0771ebf810c75125c2fd79969d688b.jpg" />
+                            <img :src="item.img1" />
                         </a>
                         <div class="d-flex justify-content-between alight-item-center mt-3">
                             <p class="code">{{item.productCode}}</p>
@@ -37,8 +37,8 @@
                 <div class="item_s_2" v-for="(item, index) in _HotSale" :key="index">
                     <div class="item2">
                         <a href="" class="item_img2">
-                            <img src="https://lacdau.com/media/product/250-1346-b55dc6334941623f1aff4e744f047fb2.jpg" />
-                            <img src="https://lacdau.com/media/product/250-1346-redbean2.jpg" />
+                            <img :src="item.img1" />
+                            <img :src="item.img2" />
                         </a>
                         <div class="d-flex justify-content-between alight-item-center mt-3">
                             <p class="code">{{item.productCode}}</p>
