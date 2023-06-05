@@ -1,12 +1,57 @@
 ﻿<div class="container-fluid" id="AppHomeVue">
-    <section class="section1 width_100">
-        <p class="h3">Hàng thanh lý facebook</p>
-        <div class="row">
-            <div class="col">
-                <div class="item">
-                    <a href="#">
-                        <img src="https://lacdau.com/media/product/250-1390-9fb336f74cfe798312d0f43c802758bc.jpg" />
-                    </a>
+
+    <section class="section1 width_100 mb-2">
+        <div class="box_title_group">
+            <p class="h3 text-center">Xu hướng mua sắm</p>
+        </div>
+        <div class="scroll1-container">
+            <div class="scroll1">
+                <div class="item_s_1" v-for="(item, index) in _HotTrend" :key="index">
+                    <div class="item1">
+                        <a href="" class="item_img1">
+                            <img src="https://lacdau.com/media/product/250-1347-df0771ebf810c75125c2fd79969d688b.jpg" />
+                        </a>
+                        <div class="d-flex justify-content-between alight-item-center mt-3">
+                            <p class="code">{{item.productCode}}</p>
+                            <p class="satatus">Còn hàng</p>
+                        </div>
+                        <a href="" class="name">{{item.name}}</a>
+                        <div class="price">
+                            <span class="price_new">Giá: {{item.price}}</span>
+                            <span class="icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section2 width_100 mb-2">
+        <div class="box_title_group">
+            <p class="h3 text-center">Xu hướng mua sắm</p>
+        </div>
+        <div class="scroll2-container">
+            <div class="scroll2">
+                <div class="item_s_2" v-for="(item, index) in _HotSale" :key="index">
+                    <div class="item2">
+                        <a href="" class="item_img2">
+                            <img src="https://lacdau.com/media/product/250-1346-b55dc6334941623f1aff4e744f047fb2.jpg" />
+                            <img src="https://lacdau.com/media/product/250-1346-redbean2.jpg" />
+                        </a>
+                        <div class="d-flex justify-content-between alight-item-center mt-3">
+                            <p class="code">{{item.productCode}}</p>
+                            <p class="satatus">Còn hàng</p>
+                        </div>
+                        <a href="#" class="name">{{item.name}}</a>
+                        <div class="price">
+                            <span class="price_new">Giá: {{item.price}}</span>
+                            <span class="icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,7 +79,7 @@
             }
         },
         updated() {
-            this.initCarousel();
+
         },
         methods: {
             CallData() {
@@ -42,23 +87,13 @@
                     .then(res => res.json())
                     .then(data => {
                         this.HotTrend = data.object;
-                        this.checkRenderedCarousel();    
                     });
 
                 fetch("/Home/GetProductHotSale")
                     .then(res => res.json())
                     .then(data => {
                         this.HotSale = data.object;
-                        this.checkRenderedCarousel();
                     });
-
-
-            },
-            checkRenderedCarousel() {
-                // Kiểm tra xem cả hai carousel đã được render hoàn tất chưa
-                if (this.HotTrend.length > 0 && this.HotSale.length > 0) {
-                    this.initCarousel();
-                }
             },
             initCarousel() {
                 setTimeout(function () {

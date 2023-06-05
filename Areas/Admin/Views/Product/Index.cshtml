@@ -209,17 +209,17 @@
 
         let file1 = document.getElementById("Img1File1").files[0]
         if (file1) {
-            _data.append("Img1", await compressImage(file1))
+            _data.append("Img1", await Converbase64(file1))
         } else { _data.append("Img1", $("#Img1").val()) }
 
         let file2 = document.getElementById("Img1File2").files[0]
         if (file2) {
-            _data.append("Img2", await compressImage(file2))
+            _data.append("Img2", await Converbase64(file2))
         } else { _data.append("Img2", $("#Img2").val()) }
 
         let file3 = document.getElementById("Img1File3").files[0]
         if (file3) {
-            _data.append("Img3", await compressImage(file3))
+            _data.append("Img3", await Converbase64(file3))
         } else { _data.append("Img3", $("#Img3").val()) }
 
         fetch("/Admin/Product/AddEditProduct", {
@@ -273,6 +273,19 @@
             reader.onerror = reject;
         });
     };
+
+    // xử lý lại ảnh lần 2
+
+    function Converbase64(file) {
+        return new Promise((resolve, reject) => {
+            let reader = new FileReader();
+            reader.onload = (event) => {
+                resolve(event.target.result);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
 
     $(document).ready(function () {
         $("#tableProduct").DataTable({

@@ -26,7 +26,7 @@
                     <tr>
                         <td class="text-center">@item.Id</td>
                         <td class="text-center">@item.BrandName</td>
-                        <td class="text-center"><img src="@item.BrandImgLogo" class="w-50" /></td>
+                        <td class="text-center"><img src="@item.BrandImgLogo" style="width:auto; height:150px;" /></td>
                         <td class="text-center">@item.BrandDescription</td>
                         <td class="text-center">@item.CreatedBy</td>
                         <td class="text-center">@item.CreatedDate</td>
@@ -81,7 +81,7 @@
                                     title: mes,
                                     showConfirmButton: false,
                                     timer: 1500
-                                }).then((res)=>{window.location.reload() });
+                                }).then((res) => { window.location.reload() });
 
                             })
 
@@ -98,7 +98,7 @@
     });
 
     async function Save() {
-  
+
         var _data = new FormData()
         _data.append("Id", $("#Id").val())
         _data.append("CreatedBy", $("#CreatedBy").val())
@@ -106,7 +106,7 @@
         _data.append("BrandName", $("#BrandName").val())
         _data.append("BrandDescription", $("#BrandDescription").val())
         let file = document.getElementById("BrandImgFile").files[0]
-        _data.append("BrandImgLogo", await compressImage(file))
+        _data.append("BrandImgLogo", await Converbase64(file))
 
         fetch("/Admin/BrandAndCategory/AddEditBrand", {
             method: "POST",
@@ -123,7 +123,7 @@
                 Swal.fire({
                     title: message,
                     icon: 'info',
-                }).then(res=>{
+                }).then(res => {
                     window.location.reload();
                 });
             })
@@ -151,7 +151,20 @@
         });
     }
 
-    $(document).ready(function(){
+    // xử lý lại ảnh lần 2
+
+    function Converbase64(file) {
+        return new Promise((resolve, reject) => {
+            let reader = new FileReader();
+            reader.onload = (event) => {
+                resolve(event.target.result);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
+    $(document).ready(function () {
         $("#tableBrand").DataTable({
             responsive: true,
             paging: true,
