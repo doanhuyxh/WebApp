@@ -217,6 +217,13 @@ header .nav-header .nav-1 .nav-ch-2 .nav-ch1-1 .nav-ch2-4 div {
 }
 .section1 .scroll1-container .scroll1 .item_s_1 .item1 .price .icon {
   font-size: 20px;
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+.section1 .scroll1-container .scroll1 .item_s_1 .item1 .price .icon:hover {
+  background-color: #29A07E;
+  cursor: pointer;
+  transition: all 0.4s;
 }
 
 .section2 {
@@ -314,6 +321,13 @@ header .nav-header .nav-1 .nav-ch-2 .nav-ch1-1 .nav-ch2-4 div {
 }
 .section2 .scroll2-container .scroll2 .item_s_2 .item2 .price .icon {
   font-size: 20px;
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+.section2 .scroll2-container .scroll2 .item_s_2 .item2 .price .icon:hover {
+  background-color: #29A07E;
+  cursor: pointer;
+  transition: all 0.4s;
 }
 
 .section3 {
@@ -412,6 +426,13 @@ header .nav-header .nav-1 .nav-ch-2 .nav-ch1-1 .nav-ch2-4 div {
 }
 .section3 .scroll3-container .scroll3 .item_s_3 .item3 .price .icon {
   font-size: 20px;
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+.section3 .scroll3-container .scroll3 .item_s_3 .item3 .price .icon:hover {
+  background-color: #29A07E;
+  cursor: pointer;
+  transition: all 0.4s;
 }
 
 /*Css trang detail product*/

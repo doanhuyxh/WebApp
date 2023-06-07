@@ -8,17 +8,17 @@
             <div class="scroll1">
                 <div class="item_s_1" v-for="(item, index) in _HotTrend" :key="index">
                     <div class="item1">
-                        <a href="" class="item_img1">
+                        <a :href="`/Home/DetailProduct?id=${item.id}`" class="item_img1">
                             <img :src="item.img1" />
                         </a>
                         <div class="d-flex justify-content-between alight-item-center mt-3">
                             <p class="code">{{item.productCode}}</p>
                             <p class="satatus">Còn hàng</p>
                         </div>
-                        <a href="" class="name">{{item.name}}</a>
+                        <a :href="`/Home/DetailProduct?id=${item.id}`" class="name">{{item.name}}</a>
                         <div class="price">
                             <span class="price_new">Giá: {{item.price}}</span>
-                            <span class="icon">
+                            <span class="icon" v-on:click="AddCart(item.id)">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </span>
                         </div>
@@ -36,7 +36,7 @@
             <div class="scroll2">
                 <div class="item_s_2" v-for="(item, index) in _HotSale" :key="index">
                     <div class="item2">
-                        <a href="" class="item_img2">
+                        <a :href="`/Home/DetailProduct?id=${item.id}`" class="item_img2">
                             <img :src="item.img1" />
                             <img :src="item.img2" />
                         </a>
@@ -44,10 +44,10 @@
                             <p class="code">{{item.productCode}}</p>
                             <p class="satatus">Còn hàng</p>
                         </div>
-                        <a href="#" class="name">{{item.name}}</a>
+                        <a :href="`/Home/DetailProduct?id=${item.id}`" class="name">{{item.name}}</a>
                         <div class="price">
                             <span class="price_new">Giá: {{item.price}}</span>
-                            <span class="icon">
+                            <span class="icon" v-on:click="AddCart(item.id)">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </span>
                         </div>
@@ -65,17 +65,17 @@
             <div class="scroll3">
                 <div class="item_s_3" v-for="(item, index) in _HotTrend" :key="index">
                     <div class="item3">
-                        <a href="" class="item_img3">
+                        <a :href="`/Home/DetailProduct?id=${item.id}`" class="item_img3">
                             <img src="https://lacdau.com/media/product/250-1193-8b6fc8a107fe41f4cc055a611c14888e.jpg" />
                         </a>
                         <div class="d-flex justify-content-between alight-item-center mt-3">
                             <p class="code">{{item.productCode}}</p>
                             <p class="satatus">Còn hàng</p>
                         </div>
-                        <a href="" class="name">{{item.name}}</a>
+                        <a :href="`/Home/DetailProduct?id=${item.id}`" class="name">{{item.name}}</a>
                         <div class="price">
                             <span class="price_new">Giá: {{item.price}}</span>
-                            <span class="icon">
+                            <span class="icon" v-on:click="AddCart(item.id)">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </span>
                         </div>
@@ -132,11 +132,13 @@
                         nav: false,
                         dots: true,
                         autoplay: true
-
                     });
                 }, 100)
-
+            },
+            AddCart(id) {
+               alert(id)
             }
+
 
         }
     })
