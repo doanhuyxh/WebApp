@@ -1,4 +1,4 @@
-﻿<div class="container-fluid" id="AppHomeVue">
+﻿<div class="container-fluid mb-2" id="AppHomeVue">
 
     <section class="section1 width_100 mb-2">
         <div class="box_title_group">
@@ -56,7 +56,36 @@
             </div>
         </div>
     </section>
+
+    <section class="section3 width_100 mb-2">
+        <div class="box_title_group">
+            <p class="h3 text-center">Lót chuột</p>
+        </div>
+        <div class="scroll3-container">
+            <div class="scroll3">
+                <div class="item_s_3" v-for="(item, index) in _HotTrend" :key="index">
+                    <div class="item3">
+                        <a href="" class="item_img3">
+                            <img src="https://lacdau.com/media/product/250-1193-8b6fc8a107fe41f4cc055a611c14888e.jpg" />
+                        </a>
+                        <div class="d-flex justify-content-between alight-item-center mt-3">
+                            <p class="code">{{item.productCode}}</p>
+                            <p class="satatus">Còn hàng</p>
+                        </div>
+                        <a href="" class="name">{{item.name}}</a>
+                        <div class="price">
+                            <span class="price_new">Giá: {{item.price}}</span>
+                            <span class="icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
+
 
 <script type="text/javascript">
     var AppHomeVue = new Vue({

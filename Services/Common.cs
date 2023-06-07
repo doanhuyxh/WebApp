@@ -35,5 +35,27 @@ namespace WebApp.Services
             return ProfilePictureFileName;
 
         }
+
+        public async Task<string> UploadProductPicture(IFormFile picture)
+        {
+            string ProfilePictureFileName = string.Empty;
+
+            if (picture != null)
+            {
+                string uploadsFolder = Path.Combine(_iHostingEnvironment.ContentRootPath, "wwwroot/upload/productPicture");
+
+                if (picture.FileName == null)
+                    ProfilePictureFileName = "blank_avatar.png";
+                else
+                    ProfilePictureFileName = DateTime.Now.Ticks.ToString() + "_" + picture.FileName;
+                string filePath = Path.Combine(uploadsFolder, ProfilePictureFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await picture.CopyToAsync(fileStream);
+                }
+            }
+            return ProfilePictureFileName;
+
+        }
     }
 }

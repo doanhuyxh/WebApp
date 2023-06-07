@@ -12,13 +12,10 @@
 
     <!---->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" />
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!--font chữ-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap" rel="stylesheet">
 
     <!--vuejs-->
     <script src="~/lib/vuejs/vue_2_7_14.js"></script>
@@ -29,15 +26,12 @@
 
 </head>
 <body>
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
-            <partial name="Header" />
-            <div class="container">
-                @RenderBody()
-            </div>
-            <partial name="Footer" />
-        </main>
+    <partial name="Header" />
+
+    <div class="container content" style="background-color:rgb(245,245,245);">
+        @RenderBody()
     </div>
+    <partial name="Footer" />
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

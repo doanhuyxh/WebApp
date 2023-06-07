@@ -296,5 +296,12 @@ namespace WebApp.Controllers
                 return Json(jsonResult);
             }
         }
+
+        [HttpGet]
+        public IActionResult DetailProduct(int id)
+        {
+            ProductViewModel pd = _context.Product.FirstOrDefault(i => i.Id == id);
+            return View(pd);
+        }
     }
 }

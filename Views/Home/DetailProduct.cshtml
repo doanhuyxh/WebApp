@@ -1,1 +1,72 @@
-﻿
+﻿@model WebApp.Models.ViewModel.ProductViewModel;
+
+<div id="DetailVue" class="container-lg row m-2" style="background-color: #fff">
+    <div class="col-5">
+        <div class="container-fluid mt-2">
+            <div class="border overflow-hidden text-center boder-radius-2em" style="width:38em; height:auto;">
+                <img :src="BigSizeImg" style="width:100%; height:100%;" />
+            </div>
+
+            <div class="d-flex justify-content-evenly mt-3">
+                <div class="boder-radius-2em" style="width:7em; height:auto;"><img :src="Img1" style="width:100%; height:100%;" /> </div>
+                <div class="boder-radius-2em" style="width:7em; height:auto;"><img :src="Img2" style="width:100%; height:100%;" /> </div>
+                <div class="boder-radius-2em" style="width:7em; height:auto;"><img :src="Img3" style="width:100%; height:100%;" /> </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-7">
+        <div class="container mt-2" style="margin-left: 4em">
+            <div class="div_name">
+                <p class="h2">{{name}}</p>
+                <div>Mã SP:<span>{{code}}</span></div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="container-fluid price_detail">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Giá khuyến mại:</th>
+                                    <td><span>{{price}} VNĐ </span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn_add_order">Mua Ngay</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn_add_card">Thêm vào giỏ hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var DetailVueApp = new Vue({
+        el: "#DetailVue",
+        data: {
+            id: @Html.Raw(Model.Id),
+            code: "@Html.Raw(Model.ProductCode)",
+            name: "@Html.Raw(Model.Name)",
+            price: @Html.Raw(Model.Price),
+            brandName: "@Html.Raw(Model.BrandName)",
+            cateName: "@Html.Raw(Model.CategoryName)",
+            slug: "@Html.Raw(Model.Slug)",
+            Img1: "@Html.Raw(Model.Img1)",
+            Img2: "@Html.Raw(Model.Img2)",
+            Img3: "@Html.Raw(Model.Img3)",
+
+            BigSizeImg: "",
+        },
+        mounted() {
+            this.BigSizeImg = this.Img1
+        },
+        methods: {
+
+        }
+    })
+</script>
