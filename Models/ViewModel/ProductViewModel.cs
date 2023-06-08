@@ -27,9 +27,9 @@ namespace WebApp.Models.ViewModel
         public bool HotTrend { set; get; }
         [Display(Name = "Slug")]
         public string Slug { get; set; } = string.Empty;
-        public string Img1 { get; set; } = string.Empty;
-        public string Img2 { get; set; } = string.Empty;
-        public string Img3 { get; set; } = string.Empty;
+        public string? Img1 { get; set; } = string.Empty;
+        public string? Img2 { get; set; } = string.Empty;
+        public string? Img3 { get; set; } = string.Empty;
         public bool Stop { set; get; }
         [Display(Name = "Ảnh 1")]
         public IFormFile? Img1File1 { get; set; }
@@ -52,9 +52,9 @@ namespace WebApp.Models.ViewModel
                 Description = model.Description,
                 Quantity = model.Quantity,
                 ProductCode = model.ProductCode,
-                Img1 = model.Img1,
-                Img2 = model.Img2,
-                Img3 = model.Img3,
+                Img1 = model.Img1 ?? "",
+                Img2 = model.Img2 ?? "",
+                Img3 = model.Img3 ?? "",
                 Slug = model.Slug,
                 Stop = model.Stop,
                 CreatedBy = model.CreatedBy,

@@ -48,6 +48,7 @@ namespace WebApp
 
             builder.Services.AddScoped<IIdentityDataInitializer, IdentityDataInitializer>();
             builder.Services.AddScoped<ICommon, Common>();
+            builder.Services.AddScoped<IEmailGoogle, EmailGoogle>();
 
 
 

@@ -6,6 +6,7 @@ using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.AccountViewModels;
 using WebApp.Models.ViewModel;
+using WebApp.Services;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebApp.Controllers
@@ -16,12 +17,14 @@ namespace WebApp.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly string user;
+        private readonly IEmailGoogle _emailGoogle;
 
-        public HomeController(UserManager<ApplicationUser> userManager, IConfiguration configuration, ApplicationDbContext context, IHttpContextAccessor accessor)
+        public HomeController(UserManager<ApplicationUser> userManager, IConfiguration configuration, ApplicationDbContext context, IHttpContextAccessor accessor, IEmailGoogle emailGoogle)
         {
             _configuration = configuration;
             _context = context;
             _userManager = userManager;
+            _emailGoogle = emailGoogle;
             user = accessor.HttpContext.User.Identity.Name;
         }
         public IActionResult ConFig()
@@ -320,6 +323,12 @@ namespace WebApp.Controllers
         {
             ProductViewModel pd = _context.Product.FirstOrDefault(i => i.Id == id);
             return View(pd);
+        }
+
+        [HttpGet]
+        public string Mail()
+        {
+            return _emailGoogle.SendMailChangePassWork("adad", "adad");
         }
     }
 }

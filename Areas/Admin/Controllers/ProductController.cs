@@ -8,6 +8,7 @@ using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.ViewModel;
 using WebApp.Services;
+using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -16,9 +17,12 @@ namespace WebApp.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ProductController(ApplicationDbContext context)
+        private readonly ICommon _icommon;
+
+        public ProductController(ApplicationDbContext context, ICommon icommon)
         {
             _context = context;
+            _icommon = icommon;
         }
         public IActionResult Index()
         {
@@ -75,7 +79,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddEditProduct(ProductViewModel model)
+        public async Task<JsonResult> AddEditProduct(ProductViewModel model)
         {
             JsonResultViewModel jsonResultViewModel = new JsonResultViewModel();
 
@@ -84,6 +88,18 @@ namespace WebApp.Areas.Admin.Controllers
                 if (model.Id != 0)
                 {
                     Product pd = _context.Product.FirstOrDefault(p => p.Id == model.Id);
+                    if (model.Img1File1 != null)
+                    {
+                        pd.Img1 = "/upload/productPicture/" + await _icommon.UploadProductPicture(model.Img1File1);
+                    }
+                    if (model.Img1File1 != null)
+                    {
+                        pd.Img2 = "/upload/productPicture/" + await _icommon.UploadProductPicture(model.Img1File2);
+                    }
+                    if (model.Img1File1 != null)
+                    {
+                        pd.Img3 = "/upload/productPicture/" + await _icommon.UploadProductPicture(model.Img1File3);
+                    }
                     _context.Entry(pd).CurrentValues.SetValues(model);
                     _context.SaveChanges();
                     jsonResultViewModel.Success = true;
@@ -95,6 +111,19 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     Product pd = new Product();
                     pd = model;
+
+                    if (model.Img1File1 != null)
+                    {
+                        pd.Img1 = "/upload/productPicture/" + await _icommon.UploadProductPicture(model.Img1File1);
+                    }
+                    if (model.Img1File1 != null)
+                    {
+                        pd.Img2 = "/upload/productPicture/" + await _icommon.UploadProductPicture(model.Img1File2);
+                    }
+                    if (model.Img1File1 != null)
+                    {
+                        pd.Img3 = "/upload/productPicture/" + await _icommon.UploadProductPicture(model.Img1File3);
+                    }
                     pd.CreatedBy = HttpContext.User.Identity.Name;
                     pd.CreatedDate = DateTime.Now;
                     _context.Add(pd);

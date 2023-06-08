@@ -111,7 +111,7 @@ namespace WebApp.Areas.Admin.Controllers
             }
             else
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(vm.Email);
+                ApplicationUser user = await _userManager.FindByIdAsync(vm.ApplicationUserId);
                 if (vm.AvatarFile != null)
                 {
                     user.AvatartPath = "/upload/avatar/" + await _icommon.UploadAvatar(vm.AvatarFile);
@@ -120,6 +120,11 @@ namespace WebApp.Areas.Admin.Controllers
                 user.LastName = vm.LastName;
                 user.PhoneNumber = vm.PhoneNumber;
                 user.Address = vm.Address;
+                if (vm.Email != user.Email)
+                {
+                    user.Email = vm.Email;
+                    user.NormalizedEmail = vm.Email.ToUpper();
+                }
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
@@ -132,6 +137,7 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     return PartialView("_EditProFileUser", vm);
                 }
+
             }
 
             rs.Success = false;

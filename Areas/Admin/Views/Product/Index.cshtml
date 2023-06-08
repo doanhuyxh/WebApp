@@ -195,6 +195,9 @@
         _data.append("CreatedBy", $("#CreatedBy").val())
         _data.append("CreatedDate", $("#CreatedDate").val())
         _data.append("ProductCode", $("#ProductCode").val())
+        _data.append("Img1", $("#Img1").val())
+        _data.append("Img2", $("#Img2").val())
+        _data.append("Img3", $("#Img3").val())
         _data.append("Name", $("#Name").val())
         _data.append("Description", $("#Description").val())
         _data.append("BrandId", $("#BrandId").val())
@@ -206,21 +209,25 @@
         _data.append("Slug", $("#Slug").val())
         _data.append("Stop", false)
 
+        _data.append("Img1File1", document.getElementById("Img1File1").files[0])
+        _data.append("Img1File2", document.getElementById("Img1File2").files[0])
+        _data.append("Img1File3", document.getElementById("Img1File3").files[0])
 
-        let file1 = document.getElementById("Img1File1").files[0]
-        if (file1) {
-            _data.append("Img1", await Converbase64(file1))
-        } else { _data.append("Img1", $("#Img1").val()) }
 
-        let file2 = document.getElementById("Img1File2").files[0]
-        if (file2) {
-            _data.append("Img2", await Converbase64(file2))
-        } else { _data.append("Img2", $("#Img2").val()) }
+        //let file1 = document.getElementById("Img1File1").files[0]
+        //if (file1) {
+        //    _data.append("Img1", await Converbase64(file1))
+        //} else { _data.append("Img1", $("#Img1").val()) }
 
-        let file3 = document.getElementById("Img1File3").files[0]
-        if (file3) {
-            _data.append("Img3", await Converbase64(file3))
-        } else { _data.append("Img3", $("#Img3").val()) }
+        //let file2 = document.getElementById("Img1File2").files[0]
+        //if (file2) {
+        //    _data.append("Img2", await Converbase64(file2))
+        //} else { _data.append("Img2", $("#Img2").val()) }
+
+        //let file3 = document.getElementById("Img1File3").files[0]
+        //if (file3) {
+        //    _data.append("Img3", await Converbase64(file3))
+        //} else { _data.append("Img3", $("#Img3").val()) }
 
         fetch("/Admin/Product/AddEditProduct", {
             method: "POST",
