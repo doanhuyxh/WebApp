@@ -1,1 +1,58 @@
-﻿
+﻿@model WebApp.Models.AccountViewModels.UserProFileViewModel;
+
+<div class="container row p-4" style="background-color:#fff">
+    <div class="col-12 text-center">
+        <p class="h2 text-success">Thông tin cá nhân</p>
+    </div>
+
+    <div class="col-12 row p-3">
+        <div class="col-4">
+            <table class="table table-responsive table-bordered border-success">
+                <tbody>
+                    <tr>
+                        <th>Họ</th>
+                        <td>@Model.FisrtName</td>
+                    </tr>
+                    <tr>
+                        <th>Tên</th>
+                        <td>@Model.LastName</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại</th>
+                        <td>@Model.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ</th>
+                        <td>@Model.Address</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4">
+            <table class="table table-responsive table-bordered border-success">
+                <tbody>
+                    <tr>
+                        <th>Tài khoản</th>
+                        <td>@Model.UserName</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ Email</th>
+                        <td>@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <th>Thay đổi mật khẩu</th>
+                        <td class="text-center"><button class="btn btn-danger" type="button">Đổi mật khẩu</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4 text-center">
+            <div class="card" style="width: 18rem; margin:auto">
+                <img src="/@Model.AvatarPath" class="card-img-top" alt="Avatar">
+                <div class="card-body text-center">
+                    <button class="btn btn-warning text-primary" type="button">Thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

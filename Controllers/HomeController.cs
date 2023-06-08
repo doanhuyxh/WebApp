@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.Data;
 using WebApp.Models;
+using WebApp.Models.AccountViewModels;
 using WebApp.Models.ViewModel;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -12,12 +14,14 @@ namespace WebApp.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly string user;
 
-        public HomeController(IConfiguration configuration, ApplicationDbContext context, IHttpContextAccessor accessor)
+        public HomeController(UserManager<ApplicationUser> userManager, IConfiguration configuration, ApplicationDbContext context, IHttpContextAccessor accessor)
         {
             _configuration = configuration;
             _context = context;
+            _userManager = userManager;
             user = accessor.HttpContext.User.Identity.Name;
         }
         public IActionResult ConFig()
@@ -46,9 +50,23 @@ namespace WebApp.Controllers
             return Json(jsonResult);
         }
 
+        [Authorize]
         public IActionResult ProFile()
         {
-            return View();
+            UserProFileViewModel userVM = new UserProFileViewModel();
+
+            var _user = _context.ApplicationUser.FirstOrDefault(i => i.UserName == user);
+            userVM.UserName = _user.UserName;
+            userVM.Email = _user.Email;
+            userVM.FisrtName = _user.FirstName;
+            userVM.LastName = _user.LastName;
+            userVM.PhoneNumber = _user.PhoneNumber;
+            userVM.AvatarPath = _user.AvatartPath;
+            userVM.Address = _user.Address;
+            userVM.AvatarPath = _user.AvatartPath;
+
+
+            return View(userVM);
         }
         public IActionResult Index()
         {

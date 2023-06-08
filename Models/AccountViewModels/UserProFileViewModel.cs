@@ -34,5 +34,8 @@ namespace WebApp.Models.AccountViewModels
         [Compare("Password", ErrorMessage = "Mật khẩu xác nhận không khớp.")]
         public string PasswordCompere { set; get; }
         public bool IsActive { get; set; } = true;
+
+        [Display(Name ="Địa chỉ")]
+        public string? Address { get; set; }
     }
 }

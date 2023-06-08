@@ -26,22 +26,30 @@ namespace WebApp.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.ListUser = (from _nd in _context.Users
-                                select new UserProFileViewModel
-                                {
-                                    ApplicationUserId = _nd.Id,
-                                    UserName = _nd.UserName,
-                                    Email = _nd.Email,
-                                    PhoneNumber = _nd.PhoneNumber,
-                                    FisrtName = _nd.FirstName,
-                                    LastName = _nd.LastName,
-                                    AvatarPath = _nd.AvatartPath,
-                                    IsActive = _nd.IsActive,
-                                }
-                                ).ToList();
             ViewData["CurrentPage"] = "Quản Lý Người Dùng";
             return View();
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult DataUser()
+        {
+            var ds = (from _nd in _context.Users
+                      select new UserProFileViewModel
+                      {
+                          ApplicationUserId = _nd.Id,
+                          UserName = _nd.UserName,
+                          Email = _nd.Email,
+                          PhoneNumber = _nd.PhoneNumber,
+                          FisrtName = _nd.FirstName,
+                          LastName = _nd.LastName,
+                          AvatarPath = _nd.AvatartPath,
+                          IsActive = _nd.IsActive,
+                      }).ToList();
+
+            return Ok(ds);
+        }
+
         public async Task<IActionResult> GetAllUser()
         {
             var listUser = await _context.Users.ToArrayAsync();
@@ -72,6 +80,7 @@ namespace WebApp.Areas.Admin.Controllers
                 user2.LastName = user.LastName;
                 user2.ApplicationUserId = user.Id;
                 user2.AvatarPath = user.AvatartPath;
+                user2.Address = user.Address;
                 return PartialView("_EditProFileUser", user2);
             }
         }
@@ -83,12 +92,13 @@ namespace WebApp.Areas.Admin.Controllers
             if (string.IsNullOrEmpty(vm.ApplicationUserId))
             {
                 ApplicationUser user = new();
-                user.AvatartPath = "upload/avatar/" + await _icommon.UploadAvatar(vm.AvatarFile);
+                user.AvatartPath = "/upload/avatar/" + await _icommon.UploadAvatar(vm.AvatarFile);
                 user.UserName = vm.UserName;
                 user.LastName = vm.LastName;
                 user.UserName = vm.UserName;
                 user.PhoneNumber = vm.PhoneNumber;
                 user.Email = vm.Email;
+                user.Address = vm.Address;
                 user.IsActive = true;
                 var result = await _userManager.CreateAsync(user, vm.Password);
                 if (result.Succeeded)
@@ -104,11 +114,12 @@ namespace WebApp.Areas.Admin.Controllers
                 ApplicationUser user = await _userManager.FindByEmailAsync(vm.Email);
                 if (vm.AvatarFile != null)
                 {
-                    user.AvatartPath = "upload/avatar/" + await _icommon.UploadAvatar(vm.AvatarFile);
+                    user.AvatartPath = "/upload/avatar/" + await _icommon.UploadAvatar(vm.AvatarFile);
                 }
                 user.FirstName = vm.FisrtName;
                 user.LastName = vm.LastName;
                 user.PhoneNumber = vm.PhoneNumber;
+                user.Address = vm.Address;
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
@@ -128,6 +139,8 @@ namespace WebApp.Areas.Admin.Controllers
             rs.Mesaage = "Đã xảy ra lỗi";
             return new JsonResult(rs);
         }
+
+        [HttpGet]
         public async Task<IActionResult> ChangeStatus(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -142,6 +155,8 @@ namespace WebApp.Areas.Admin.Controllers
                 return BadRequest(result.Errors);
             }
         }
+
+        [HttpGet]
         public async Task<IActionResult> ChangePassword(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);

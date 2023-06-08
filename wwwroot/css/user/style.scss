@@ -89,6 +89,19 @@ header {
     .user {
         height: 2.5em;
         background-color: forestgreen;
+
+        a{
+            height:100%;
+            text-align:center;
+            justify-content:center;
+            padding-right: 12px;
+            padding-left: 4px;
+        }
+
+        form{
+            height:100%;
+            overflow:hidden;
+        }
     }
 
     .nav-header {

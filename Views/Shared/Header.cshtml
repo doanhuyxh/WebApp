@@ -1,7 +1,21 @@
 ﻿
 <header>
     <div class="width_100 user">
-        <a href="/Home/ProFile" class="text-dark float-end px-3">Xin chào </a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="/Home/ProFile" class="text-dark float-end bg-danger">Xin chào @User.Identity.Name</a>
+
+            <form method="post" action="/Account/Logout">
+                <button type="submit" class="nav-link text-black font-weight-bold px-0 border-0 px-3">
+                    <i class="fa fa-user me-sm-1"></i>
+                    <span class="d-sm-inline d-none">Đăng xuất</span>
+                </button>
+            </form>
+        }
+        else
+        {
+            <a href="/Account/Login" class="text-dark float-end px-3 btn btn-warning">Đăng nhập</a>
+        }
     </div>
 
     <div class="container nav-header">
