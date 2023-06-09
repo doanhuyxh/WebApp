@@ -25,7 +25,7 @@ namespace WebApp.Controllers
             _context = context;
             _userManager = userManager;
             _emailGoogle = emailGoogle;
-            user = accessor.HttpContext.User.Identity.Name;
+            user = accessor.HttpContext.User.Identity.Name ?? "";
         }
         public IActionResult ConFig()
         {
@@ -71,6 +71,7 @@ namespace WebApp.Controllers
 
             return View(userVM);
         }
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -325,10 +326,42 @@ namespace WebApp.Controllers
             return View(pd);
         }
 
-        [HttpGet]
-        public string Mail()
+        [HttpPost]
+        public IActionResult Mail(string pass)
         {
-            return _emailGoogle.SendMailChangePassWork("adad", "adad");
+            JsonResultViewModel json = new JsonResultViewModel();
+
+            ApplicationUser _user = new ApplicationUser();
+            _user = _context.Users.FirstOrDefault(i => i.UserName == user);
+            string full_name = "";
+            string email = "";
+            try
+            {
+                email = _user.Email;
+                full_name = _user.FirstName + " " + _user.LastName;
+            }
+            catch (Exception ex)
+            {
+                json.Success = false;
+                json.Mesaage = "Không tồn tại thông tin người dùng " + ex.Message;
+                json.Object = _user;
+                return Json(json);
+            }
+            string result = _emailGoogle.SendMailChangePassWord(full_name, email, pass);
+            if (result == "success")
+            {
+                json.Success = true;
+                json.Mesaage = "";
+                json.Object = null;
+                return Json(json);
+            }
+            else
+            {
+                json.Success = false;
+                json.Mesaage = result;
+                json.Object = null;
+                return Json(json);
+            }
         }
     }
 }

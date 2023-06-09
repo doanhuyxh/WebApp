@@ -1,9 +1,13 @@
-﻿
+﻿@{
+    var userClaims = User.Claims;
+}
 <header>
     <div class="width_100 user">
         @if (User.Identity.IsAuthenticated)
         {
-            <a href="/Home/ProFile" class="text-dark float-end bg-danger">Xin chào @User.Identity.Name</a>
+            <a href="/Home/ProFile" class="text-dark float-end bg-danger">
+                Xin chào  @User.FindFirstValue(ClaimTypes.Name)
+            </a>
 
             <form method="post" action="/Account/Logout">
                 <button type="submit" class="nav-link text-black font-weight-bold px-0 border-0 px-3">
@@ -11,6 +15,16 @@
                     <span class="d-sm-inline d-none">Đăng xuất</span>
                 </button>
             </form>
+
+
+<h2>Claims:</h2>
+@foreach (var claim in userClaims)
+{
+    <p>Claim Type: @claim.Type</p>
+    <p>Claim Value: @claim.Value</p>
+}
+
+
         }
         else
         {

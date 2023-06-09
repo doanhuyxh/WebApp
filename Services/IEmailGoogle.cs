@@ -2,6 +2,6 @@
 {
     public interface IEmailGoogle
     {
-        string SendMailChangePassWork(string email, string newPass);
+        string SendMailChangePassWord(string fullName, string email, string newPass);
     }
 }
