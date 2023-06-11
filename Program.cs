@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System.Configuration;
+using System.Security.Claims;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
@@ -101,8 +102,9 @@ namespace WebApp
                 options.CheckConsentNeeded = context => true; // Yêu cầu sự đồng ý của người dùng
                 options.MinimumSameSitePolicy = SameSiteMode.None; // Chỉ cho phép gửi cookie qua cross-site
 
-                // Cấu hình các thuộc tính khác của Cookie Policy (nếu cần)
+
             });
+
             var app = builder.Build();
 
 

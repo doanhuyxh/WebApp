@@ -2,7 +2,7 @@
 $Banner_2_backgroud: linear-gradient(270deg,#FFC34E 2.54%,#FF8B49 86.96%);
 $Banner_3_backgroud: rgb(255,255,255);
 $backgroud_color_header: #fff;
-$main_color: #29A07E ;
+$main_color: #29A07E;
 
 * {
     box-sizing: border-box;
@@ -85,22 +85,23 @@ header {
     background-color: $backgroud_color_header;
     position: fixed;
     z-index: 10;
+    overflow: hidden;
 
     .user {
         height: 2.5em;
         background-color: forestgreen;
 
-        a{
-            height:100%;
-            text-align:center;
-            justify-content:center;
+        a {
+            height: 100%;
+            text-align: center;
+            justify-content: center;
             padding-right: 12px;
             padding-left: 4px;
         }
 
-        form{
-            height:100%;
-            overflow:hidden;
+        form {
+            height: 100%;
+            overflow: hidden;
         }
     }
 
@@ -532,10 +533,10 @@ header {
                             padding: 4px 10px;
                             border-radius: 10px;
 
-                            &:hover{
-                                background-color:$main_color;
-                                cursor:pointer;
-                                transition:all 0.4s;
+                            &:hover {
+                                background-color: $main_color;
+                                cursor: pointer;
+                                transition: all 0.4s;
                             }
                         }
                     }
@@ -595,10 +596,10 @@ header {
         line-height: 15px;
 
         span {
-            margin-left:6px;
+            margin-left: 6px;
             color: #29A07E;
-            font-size:14px;
-            line-height:15px;
+            font-size: 14px;
+            line-height: 15px;
         }
     }
 }
@@ -645,3 +646,50 @@ header {
 }
 
 /*Hết Css trang detail product*/
+
+
+/*Css phần trang giỏ hàng*/
+
+.CartPage {
+    border-radius: 20px;
+
+    .cart_header {
+
+        p {
+        }
+
+        div {
+            a {
+                &:hover {
+                    color: green;
+                }
+            }
+        }
+    }
+
+    .cart_body {
+
+        .items {
+            border-radius: 20px;
+            border: 8px solid rgb(245,245,245);
+        }
+    }
+
+    .cart_footer {
+        margin-top: 30px;
+        padding: 10px 4px;
+        border-top: 8px solid rgb(245,245,245);
+
+        &:before {
+            content: "";
+            background-image: url("https://lacdau.com/static/assets/default/images/cart-border.jpg");
+            background-repeat: unset;
+            height: 4px;
+            width: 100%;
+            position: relative;
+            top: -10px;
+        }
+    }
+}
+
+/*Hết Css phần trang giỏ hàng*/

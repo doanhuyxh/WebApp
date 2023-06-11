@@ -18,7 +18,7 @@
                         <a :href="`/Home/DetailProduct?id=${item.id}`" class="name">{{item.name}}</a>
                         <div class="price">
                             <span class="price_new">Giá: {{item.price}}</span>
-                            <span class="icon" v-on:click="AddCart(item.id)">
+                            <span class="icon" v-on:click="AddCart(item)">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </span>
                         </div>
@@ -47,7 +47,7 @@
                         <a :href="`/Home/DetailProduct?id=${item.id}`" class="name">{{item.name}}</a>
                         <div class="price">
                             <span class="price_new">Giá: {{item.price}}</span>
-                            <span class="icon" v-on:click="AddCart(item.id)">
+                            <span class="icon" v-on:click="AddCart(item)">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </span>
                         </div>
@@ -75,7 +75,7 @@
                         <a :href="`/Home/DetailProduct?id=${item.id}`" class="name">{{item.name}}</a>
                         <div class="price">
                             <span class="price_new">Giá: {{item.price}}</span>
-                            <span class="icon" v-on:click="AddCart(item.id)">
+                            <span class="icon" v-on:click="AddCart(item)">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </span>
                         </div>
@@ -135,11 +135,43 @@
                     });
                 }, 100)
             },
-            AddCart(id) {
-               alert(id)
+            AddCart(product) {
+                let _data = new FormData();
+                _data.append("Id", 0);
+                _data.append("ProductId", product.id);
+                _data.append("Quantity", 1);
+                _data.append("IsDeleted", false);
+                fetch("/Home/AddToCart", {
+                    method: "POST",
+                    headers: {
+                        processData: false,
+                        contentType: false,
+                    },
+                    body: _data
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.success) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: data.mesaage,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: data.mesaage,
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    })
             }
-
-
         }
     })
 </script>

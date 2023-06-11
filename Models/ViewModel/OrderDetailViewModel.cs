@@ -5,10 +5,10 @@
         public int Id { get; set; }
         public int OrderId { get; set; }
         public int ProductId { get; set; }
-        public string? ProductName { get; set; }
-        public int Quantity { get; set; }
         public int UnitPrice { get; set; }
-        public int SubToTal { get; set; }
+        public string? ProductName { get; set; }
+        public string? Img { get; set; }
+        public int Quantity { get; set; }
         public static implicit operator OrderDetail(OrderDetailViewModel model)
         {
             return new OrderDetail
@@ -18,7 +18,6 @@
                 ProductId = model.ProductId,
                 Quantity = model.Quantity,
                 UnitPrice = model.UnitPrice,
-                SubToTal = model.SubToTal,
             };
         }
         public static implicit operator OrderDetailViewModel(OrderDetail orderdetail)
@@ -30,7 +29,6 @@
                 ProductId = orderdetail.ProductId,
                 Quantity = orderdetail.Quantity,
                 UnitPrice = orderdetail.UnitPrice,
-                SubToTal = orderdetail.SubToTal,
             };
         }
     }

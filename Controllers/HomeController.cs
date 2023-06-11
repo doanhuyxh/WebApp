@@ -56,8 +56,15 @@ namespace WebApp.Controllers
         [Authorize]
         public IActionResult ProFile()
         {
-            UserProFileViewModel userVM = new UserProFileViewModel();
 
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ProFileApi()
+        {
+            JsonResultViewModel jsonResult = new JsonResultViewModel();
+            UserProFileViewModel userVM = new UserProFileViewModel();
             var _user = _context.ApplicationUser.FirstOrDefault(i => i.UserName == user);
             userVM.UserName = _user.UserName;
             userVM.Email = _user.Email;
@@ -67,15 +74,18 @@ namespace WebApp.Controllers
             userVM.AvatarPath = _user.AvatartPath;
             userVM.Address = _user.Address;
             userVM.AvatarPath = _user.AvatartPath;
-
-
-            return View(userVM);
+            jsonResult.Success = true;
+            jsonResult.Object = userVM;
+            jsonResult.Mesaage = "";
+            return Ok(jsonResult);
         }
+
         [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult GetProductHotSale()
         {
@@ -190,96 +200,7 @@ namespace WebApp.Controllers
                 return Json(jsonResult);
             }
         }
-        [HttpGet]
-        public IActionResult AddToCart(CartViewModel vm)
-        {
-            JsonResultViewModel jsonResult = new JsonResultViewModel();
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    Cart cart = new Cart();
-                    cart = vm;
-                    cart.CreatedBy = user;
-                    cart.CreatedDate = DateTime.Now;
-                    jsonResult.Success = true;
-                    jsonResult.Object = cart;
-                    jsonResult.Mesaage = "Thêm thành công";
-                    return Json(jsonResult);
 
-                }
-                jsonResult.Success = false;
-                jsonResult.Mesaage = "Có lỗi gửi dữ liệu lên";
-                jsonResult.Object = null;
-                return Json(jsonResult);
-            }
-            catch (Exception ex)
-            {
-                jsonResult.Success = false;
-                jsonResult.Mesaage = ex.Message;
-                jsonResult.Object = null;
-                return Json(jsonResult);
-            }
-        }
-        [HttpGet]
-        public IActionResult GetCart()
-        {
-            JsonResultViewModel jsonResult = new JsonResultViewModel();
-            try
-            {
-                var ds = from cr in _context.Cart
-                         where cr.IsDeleted == false && cr.CreatedBy.Contains(user)
-                         select new CartViewModel
-                         {
-                             Id = cr.Id,
-                             ProductName = _context.Product.FirstOrDefault(p => p.Id == cr.ProductId).Name,
-                             CreatedBy = cr.CreatedBy,
-                             UnitPrice = cr.UnitPrice,
-                             Quantity = cr.Quantity,
-                             SubToTal = cr.SubToTal,
-                             IsDeleted = cr.IsDeleted,
-                             CreatedDate = cr.CreatedDate,
-                             ProductId = cr.ProductId,
-                         };
-
-                jsonResult.Success = true;
-                jsonResult.Mesaage = "Lấy dữ liệu thành công";
-                jsonResult.Object = ds.ToList();
-                return Json(jsonResult);
-            }
-            catch (Exception ex)
-            {
-                jsonResult.Success = false;
-                jsonResult.Mesaage = ex.Message;
-                jsonResult.Object = null;
-                return Json(jsonResult);
-            }
-        }
-        [HttpGet]
-        public IActionResult DeleteCart(int cartId)
-        {
-
-            JsonResultViewModel jsonResult = new JsonResultViewModel();
-            try
-            {
-                Cart cr = new Cart();
-                cr = _context.Cart.FirstOrDefault(c => c.Id == cartId);
-                cr.IsDeleted = true;
-                _context.Update(cr);
-                _context.SaveChanges();
-                jsonResult.Success = true;
-                jsonResult.Mesaage = "Đã xoá";
-                jsonResult.Object = null;
-                return Json(jsonResult);
-            }
-            catch (Exception ex)
-            {
-                jsonResult.Success = false;
-                jsonResult.Mesaage = ex.Message;
-                jsonResult.Object = null;
-                return Json(jsonResult);
-            }
-        }
         [HttpGet]
         public IActionResult SearchByCateGoryries(int cateId)
         {
@@ -362,6 +283,221 @@ namespace WebApp.Controllers
                 json.Object = null;
                 return Json(json);
             }
+        }
+
+        public IActionResult CartPage()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddToCart(CartViewModel vm)
+        {
+            JsonResultViewModel jsonResult = new JsonResultViewModel();
+
+            if (string.IsNullOrEmpty(user))
+            {
+                jsonResult.Success = false;
+                jsonResult.Mesaage = "Bạn cần đăng nhập";
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Cart cart_check = new Cart();
+                    cart_check = _context.Cart.FirstOrDefault(i => i.IsDeleted == false && i.ProductId == vm.ProductId && i.CreatedBy == user);
+                    if (cart_check != null)
+                    {
+                        jsonResult.Success = false;
+                        jsonResult.Mesaage = "Sản phẩm đã có trong giỏ hàng";
+                        jsonResult.Object = null;
+                        return Json(jsonResult);
+                    }
+
+                    Cart cart = new Cart();
+                    cart = vm;
+                    cart.CreatedBy = user;
+                    cart.CreatedDate = DateTime.Now;
+                    _context.Add(cart);
+                    _context.SaveChanges();
+                    jsonResult.Success = true;
+                    jsonResult.Object = cart;
+                    jsonResult.Mesaage = "Thêm thành công";
+                    return Json(jsonResult);
+
+                }
+                jsonResult.Success = false;
+                jsonResult.Mesaage = "Có lỗi gửi dữ liệu lên";
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+            catch (Exception ex)
+            {
+                jsonResult.Success = false;
+                jsonResult.Mesaage = ex.Message;
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetCart()
+        {
+            JsonResultViewModel jsonResult = new JsonResultViewModel();
+            if (string.IsNullOrEmpty(user))
+            {
+                jsonResult.Success = false;
+                jsonResult.Mesaage = "Bạn cần đăng nhập";
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+
+            try
+            {
+                var ds = from cr in _context.Cart
+                         where cr.IsDeleted == false && cr.CreatedBy.Contains(user)
+                         select new CartViewModel
+                         {
+                             Id = cr.Id,
+                             Product = _context.Product.FirstOrDefault(p => p.Id == cr.ProductId),
+                             CreatedBy = cr.CreatedBy,
+                             IsDeleted = cr.IsDeleted,
+                             CreatedDate = cr.CreatedDate,
+                             ProductId = cr.ProductId,
+                             Quantity = cr.Quantity,
+                         };
+
+                jsonResult.Success = true;
+                jsonResult.Mesaage = "Lấy dữ liệu thành công";
+                jsonResult.Object = ds.ToList();
+                return Json(jsonResult);
+            }
+            catch (Exception ex)
+            {
+                jsonResult.Success = false;
+                jsonResult.Mesaage = ex.Message;
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+        }
+        [HttpGet]
+        public IActionResult DeleteCart(int cartId)
+        {
+
+            JsonResultViewModel jsonResult = new JsonResultViewModel();
+            try
+            {
+                if (cartId == 0)
+                {
+                    var cartDeleteAll = _context.Cart.Where(c => c.CreatedBy == user).ToList();
+
+                    cartDeleteAll.ForEach(cr =>
+                    {
+                        cr.IsDeleted = true;
+                        _context.Update(cr);
+                    });
+
+                    _context.SaveChanges();
+                    jsonResult.Success = true;
+                    jsonResult.Mesaage = "Đã xoá tất cả sản phẩm";
+                    jsonResult.Object = null;
+                    return Json(jsonResult);
+                }
+
+                Cart cr = new Cart();
+                cr = _context.Cart.FirstOrDefault(c => c.Id == cartId);
+                cr.IsDeleted = true;
+                _context.Update(cr);
+                _context.SaveChanges();
+                jsonResult.Success = true;
+                jsonResult.Mesaage = "Đã xoá";
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+            catch (Exception ex)
+            {
+                jsonResult.Success = false;
+                jsonResult.Mesaage = ex.Message;
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+        }
+        [HttpGet]
+        public IActionResult ChangeQuantityItemCart(int cartId, int quantity)
+        {
+
+            JsonResultViewModel jsonResult = new JsonResultViewModel();
+            try
+            {
+                Cart cr = new Cart();
+                cr = _context.Cart.FirstOrDefault(c => c.Id == cartId);
+                cr.Quantity += quantity;
+                _context.Update(cr);
+                _context.SaveChanges();
+                jsonResult.Success = true;
+                jsonResult.Mesaage = "Đã thay đổi thành công";
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+            catch (Exception ex)
+            {
+                jsonResult.Success = false;
+                jsonResult.Mesaage = ex.Message;
+                jsonResult.Object = null;
+                return Json(jsonResult);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CretaeOrder(OrderViewModel vm)
+        {
+            JsonResultViewModel jsonResult = new JsonResultViewModel();
+
+            try
+            {
+                Order order = new Order();
+                order = vm;
+                order.CreatedDate = DateTime.Now;
+                order.CreatedBy = user;
+                order.IsDeleted = false;
+                _context.Add(order);
+                await _context.SaveChangesAsync();
+                foreach (var item in vm.Items)
+                {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderId = order.Id;
+                    orderDetail.ProductId = item.ProductId;
+                    orderDetail.Quantity = item.Quantity;
+                    orderDetail.UnitPrice = item.UnitPrice;
+                    _context.Add(orderDetail);
+                    await _context.SaveChangesAsync();
+                }
+                jsonResult.Success = true;
+                jsonResult.Mesaage = "";
+                jsonResult.Object = vm;
+
+                // sử lý cart sau khi order
+                var cartDeleteAll = _context.Cart.Where(c => c.CreatedBy == user).ToList();
+                cartDeleteAll.ForEach(cr =>
+                {
+                    cr.IsDeleted = true;
+                    _context.Update(cr);
+                });
+                _context.SaveChanges();
+
+
+                return Json(jsonResult);
+            }
+            catch (Exception ex)
+            {
+                jsonResult.Success = false;
+                jsonResult.Mesaage = ex.Message;
+                jsonResult.Object = vm;
+                return Json(jsonResult);
+            }
+
         }
     }
 }

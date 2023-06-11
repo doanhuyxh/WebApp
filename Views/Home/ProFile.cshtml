@@ -1,6 +1,6 @@
 ﻿@model WebApp.Models.AccountViewModels.UserProFileViewModel;
 
-<div class="container row p-4" style="background-color:#fff">
+<div class="container row p-4" id="ProFile" style="background-color:#fff">
     <div class="col-12 text-center">
         <p class="h2 text-success">Thông tin cá nhân</p>
     </div>
@@ -11,19 +11,19 @@
                 <tbody>
                     <tr>
                         <th>Họ</th>
-                        <td>@Model.FisrtName</td>
+                        <td class="text-nowrap">{{User.fisrtName}}</td>
                     </tr>
                     <tr>
                         <th>Tên</th>
-                        <td>@Model.LastName</td>
+                        <td class="text-nowrap">{{User.lastName}}</td>
                     </tr>
                     <tr>
-                        <th>Số điện thoại</th>
-                        <td>@Model.PhoneNumber</td>
+                        <th class="text-nowrap">Số điện thoại</th>
+                        <td class="text-nowrap">{{User.phoneNumber}}</t>
                     </tr>
                     <tr>
-                        <th>Địa chỉ</th>
-                        <td>@Model.Address</td>
+                        <th class="text-nowrap">Địa chỉ</th>
+                        <td class="text-nowrap">{{User.address}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -32,23 +32,23 @@
             <table class="table table-responsive table-bordered border-success">
                 <tbody>
                     <tr>
-                        <th>Tài khoản</th>
-                        <td>@Model.UserName</td>
+                        <th class="text-nowrap">Tài khoản</th>
+                        <td class="text-nowrap">{{User.userName}}</td>
                     </tr>
                     <tr>
-                        <th>Địa chỉ Email</th>
-                        <td><p class="text text-nowrap">@Model.Email</p></td>
+                        <th class="text-nowrap">Địa chỉ Email</th>
+                        <td><p class="text text-nowrap">{{User.email}}</p></td>
                     </tr>
                     <tr>
-                        <th>Thay đổi mật khẩu</th>
-                        <td class="text-center"><button class="btn btn-danger" type="button">Đổi mật khẩu</button></td>
+                        <th class="text-nowrap">Thay đổi mật khẩu</th>
+                        <td class="text-center"><button class="btn btn-danger text-nowrap" type="button">Đổi mật khẩu</button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="col-4 text-center">
             <div class="card" style="width: 18rem; margin:auto">
-                <img src="@Model.AvatarPath" class="card-img-top" alt="Avatar">
+                <img :src="User.avatarPath" class="card-img-top" alt="Avatar">
                 <div class="card-body text-center">
                     <button class="btn btn-warning text-primary" type="button">Thay đổi</button>
                 </div>
@@ -56,3 +56,32 @@
         </div>
     </div>
 </div>
+
+<script>
+    var ProFileVue = new Vue({
+        el: "#ProFile",
+        data: {
+            User:null,
+        },
+        mounted() {
+            this.CallData()
+        },
+        computed: {
+
+        },
+        methods: {
+            CallData() {
+                fetch("/Home/ProFileApi", {
+                    method: "POST"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        this.User = data.object;
+                        console.log("ProFile", this.User);
+                    });
+
+
+            },
+        }
+    })
+</script>

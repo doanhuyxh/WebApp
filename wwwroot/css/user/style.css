@@ -69,6 +69,7 @@ header {
   background-color: #fff;
   position: fixed;
   z-index: 10;
+  overflow: hidden;
 }
 header .user {
   height: 2.5em;
@@ -527,3 +528,30 @@ header .nav-header .nav-1 .nav-ch-2 .nav-ch1-1 .nav-ch2-4 div {
 }
 
 /*Hết Css trang detail product*/
+/*Css phần trang giỏ hàng*/
+.CartPage {
+  border-radius: 20px;
+}
+.CartPage .cart_header div a:hover {
+  color: green;
+}
+.CartPage .cart_body .items {
+  border-radius: 20px;
+  border: 8px solid rgb(245, 245, 245);
+}
+.CartPage .cart_footer {
+  margin-top: 30px;
+  padding: 10px 4px;
+  border-top: 8px solid rgb(245, 245, 245);
+}
+.CartPage .cart_footer:before {
+  content: "";
+  background-image: url("https://lacdau.com/static/assets/default/images/cart-border.jpg");
+  background-repeat: unset;
+  height: 4px;
+  width: 100%;
+  position: relative;
+  top: -10px;
+}
+
+/*Hết Css phần trang giỏ hàng*/

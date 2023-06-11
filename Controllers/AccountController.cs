@@ -8,9 +8,16 @@ using System.Security.Claims;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.AccountViewModels;
+using WebApp.Services;
 
 namespace WebApp.Controllers
 {
+    public static class CustomClaimTypes
+    {
+        public const string FullName = "FullName";
+    }
+
+
     [AllowAnonymous]
     public class AccountController : Controller
     {
@@ -65,7 +72,7 @@ namespace WebApp.Controllers
             {
                 var role = await _userManager.GetRolesAsync(user);
                 var claims = new List<Claim> {
-                new Claim(ClaimTypes.Name, fullname),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, role.FirstOrDefault()!),
                 };
@@ -80,6 +87,7 @@ namespace WebApp.Controllers
                     IsPersistent = true, // Thiết lập cho phép lưu cookie vĩnh viễn (remember me)
                     ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1), // Thiết lập thời gian hết hạn sau 2 giờ
                 };
+
 
                 // Đăng ký phiên đăng nhập hiện tại vào HttpContext
                 await HttpContext.SignInAsync(

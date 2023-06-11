@@ -1,12 +1,13 @@
 ﻿@{
-    var userClaims = User.Claims;
+    
 }
 <header>
     <div class="width_100 user">
         @if (User.Identity.IsAuthenticated)
         {
-            <a href="/Home/ProFile" class="text-dark float-end bg-danger">
-                Xin chào  @User.FindFirstValue(ClaimTypes.Name)
+
+            <a href="/Home/ProFile" class="text-dark float-end bg-danger text-white">
+                Trang cá nhân
             </a>
 
             <form method="post" action="/Account/Logout">
@@ -15,15 +16,6 @@
                     <span class="d-sm-inline d-none">Đăng xuất</span>
                 </button>
             </form>
-
-
-<h2>Claims:</h2>
-@foreach (var claim in userClaims)
-{
-    <p>Claim Type: @claim.Type</p>
-    <p>Claim Value: @claim.Value</p>
-}
-
 
         }
         else
@@ -36,7 +28,7 @@
         <div class="text-13 d-flex flex-wrap nav-1">
 
             <div class="col-2 col-md-2 col-lg-2 nav-ch-1">
-                <a href="javascript:void(0)">
+                <a href="/">
                     <img id="Logo_src" width="1" height="1" class="d-block m-auto h-auto"
                          style="width: 150px;">
                 </a>
@@ -78,9 +70,9 @@
                             </div>
                             <div class="d-flex flex-column">
                                 <a id="tel_href">
-                                    <span>Hotline</span>
+                                    <span class="text-nowrap">Hotline</span>
                                 </a>
-                                <b id="tel_number" class="text-success">0123456798</b>
+                                <b id="tel_number" class="text-success text-nowrap">0123456798</b>
                             </div>
                         </div>
                     </div>
@@ -94,7 +86,7 @@
                             </div>
                             <div class="d-flex flex-column">
                                 <a id="Fb_href">
-                                    <span class="text-success">Tư vấn trực tiếp</span>
+                                    <span class="text-success text-nowrap">Tư vấn trực tiếp</span>
                                 </a>
                             </div>
                         </div>
@@ -107,8 +99,8 @@
                                 <i class="fa-solid fa-cart-shopping" style="color: #1f513a;"></i>
                             </div>
                             <div class="d-flex align-items-center">
-                                <a href="#">
-                                    <span class="text-success">Giỏ hàng</span>
+                                <a href="/Home/CartPage">
+                                    <span class="text-success text-nowrap">Giỏ hàng</span>
                                 </a>
                             </div>
                         </div>

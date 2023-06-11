@@ -1,0 +1,272 @@
+﻿
+<div class="container CartPage" id="CartItem" style="background-color:#fff">
+    <div class="cart_header p-2 d-flex align-items-center justify-content-between">
+        <p class="text h3">Thông tin giỏ hàng</p>
+        <div class="">
+            <a href="/" class="btn btn-facebook">Chọn sản phẩm khác</a>
+            <button type="button" class="btn btn-danger" v-on:click="deleteCart(0)">Xoá tất cả giỏ hàng</button>
+        </div>
+    </div>
+    <div class="cart_body p-3">
+
+        <div class="col_header row">
+            <div class="col-5">
+                <p class="text w-100 text-nowrap">Sản phẩm</p>
+            </div>
+            <div class="col-1 text-center d-flex align-items-centerx">
+                <p class="text w-100 text-nowrap">Đơn giá</p>
+            </div>
+            <div class="col-3  text-center  d-flex align-items-center">
+                <p class="text w-100 text-nowrap">Số lượng</p>
+            </div>
+            <div class="col-2 text-center d-flex align-items-center">
+                <p class="text w-100 text-nowrap">Số tiền</p>
+            </div>
+            <div class="col-1 d-flex align-items-center justify-content-end">
+                <p class="text w-100 text-nowrap">Thao tác</p>
+            </div>
+        </div>
+
+
+        <div class="items row w-100" v-for="(item, index) in backupListItem">
+            <div class="col-5">
+                <div class="card mb-3" style="max-width: 580px; border:none!important">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <img :src="item.product.img1" class="img-fluid rounded-start" style="width:100px; height:auto;">
+                        </div>
+                        <div class="col-md-10 d-flex align-items-center">
+                            <div class="card-body">
+                                <h5 class="card-title">{{item.product.name}}</h5>
+                                <p class="card-text"><small class="text-muted">{{item.product.productCode}}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1 text-center d-flex align-items-center">
+                <p class="text w-100 text-nowrap">{{item.product.price}}</p>
+            </div>
+            <div class="col-3 text-center d-flex align-items-center justify-content-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger" v-on:click="updateQuantity(item.id,-1)">-</button>
+                    <button type="button" class="btn btn-warning">{{item.quantity}}</button>
+                    <button type="button" class="btn btn-success" v-on:click="updateQuantity(item.id,1)">+</button>
+                </div>
+            </div>
+            <div class="col-2 text-center d-flex align-items-center">
+                <p class="text w-100 text-nowrap">{{item.product.price * item.quantity}} VNĐ</p>
+            </div>
+            <div class="col-1 text-center d-flex align-items-center justify-content-end">
+                <button class="btn btn-danger text-nowrap" v-on:click="deleteCart(item.id)" type="button">Xoá</button>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="cart_footer mt-1 row">
+        <div class="col-6">
+            <div class="container">
+                <p class="text text-nowrap h5 my-3 px-3 text-center">Địa chỉ nhận hàng</p>
+                <input type="text" placeholder="Họ và tên" class="form-control my-1" v-model="Order.CustomerName" />
+                <input type="email" placeholder="Email" class="form-control my-1" v-model="Order.Email" />
+                <input type="tel" placeholder="Số điện thoại" class="form-control my-1" v-model="Order.PhoneNumber" />
+                <select class="form-select my-1">
+                    <option selected disabled>Chọn tỉnh thành</option>
+                    <option value="1">Hà Nội</option>
+                    <option value="2">Đà Nẵng</option>
+                    <option value="3">Hồ Chí Minh</option>
+                </select>
+                <select class="form-select my-1">
+                    <option selected disabled>Chọn quận/huyện</option>
+                    <option value="1">Thường tín</option>
+                    <option value="2">Thanh Xuân</option>
+                    <option value="3">Hai Bà Trưng</option>
+                </select>
+                <input type="text" class="form-control my-1" placeholder="Số nhà tên đường ..." v-model="Order.ShippingAddress" />
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="container">
+                <p class="text text-nowrap h5 my-3 px-3 text-center">Thanh toán</p>
+                <div class="text-center">
+                    <div class="form-check  form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="1" v-model="Order.PaymentMethods">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Thanh toán khi nhận hàng
+                        </label>
+                    </div>
+                    <div class="form-check  form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="2" v-model="Order.PaymentMethods">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Chuyển khoản
+                        </label>
+                    </div>
+                </div>
+                <div class="text-center"><p class="text text-success">Tổng tiền {{totalAmount}}</p></div>
+                <p class="text text-center text-success" v-if="Order.PaymentStatus">Đã thanh toán</p>
+                <p class="text text-center text-danger" v-else>Chưa thanh toán</p>
+
+                <div class="card p-1" v-show="Order.PaymentMethods == 2">
+                    <div class="card-body">
+                        <h5 class="card-title"><small>Số tài khoản:</small><strong class="text-primary"> 108873205093</strong></h5>
+                        <p class="card-text"><small>Chủ tài khoản:</small><strong class="text-primary"> Đoàn Quang Huy </strong></p>
+                        <p class="card-text"><small class="text-muted">Nội dung chuyển khoản: </small><strong class="text-danger">KH_{{Order.user}}_CKDH</strong></p>
+                    </div>
+                    <img src="/upload/icon/bankQR.png" class="card-img-bottom w-50 m-auto">
+                    <button type="button" class="btn btn-success m-auto p-2 mt-2" v-on:click="CheckTransaction()">Kiểm tra thanh toán</button>
+                </div>
+                <div class="text-center" v-show="Order.PaymentMethods == 1">
+                    <button type="button" class="btn btn-success" v-on:click="GetOrder()">Đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    var CartItemVue = new Vue({
+        el: "#CartItem",
+        data: {
+            ListItem: [],
+            Order: {
+                Id: "",
+                CustomerName: "",
+                Email: "",
+                PhoneNumber: "",
+                ShippingAddress: "",
+                TotalAmount: 0,
+                PaymentMethods: 1,
+                PaymentStatus: false,
+                Status: 1,
+                user: ""
+            }
+        },
+        mounted() {
+            this.CallData()
+        },
+        computed: {
+            backupListItem() {
+                return this.ListItem;
+            },
+            totalAmount() {
+                let total = this.ListItem.reduce(function (pre, current) {
+                    return pre + current.quantity * current.product.price;
+                }, 0);
+                this.Order.TotalAmount = total;
+                return total;
+            }
+        },
+        methods: {
+            CallData() {
+                fetch("/Home/GetCart")
+                    .then(res => res.json())
+                    .then(data => {
+                        this.ListItem = data.object;
+                        console.log("cart", this.ListItem);
+                    });
+
+                fetch("/Home/ProFileApi", {
+                    method: "POST"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        let user = data.object;
+                        console.log("ProFile", user);
+                        this.Order.CustomerName = `${user.fisrtName} ${user.lastName}`;
+                        this.Order.Email = `${user.email}`;
+                        this.Order.PhoneNumber = `${user.phoneNumber}`;
+                        this.Order.user = `${user.userName}`;
+                        this.Order.ShippingAddress = `${user.address}`;
+                    });
+
+
+            },
+            updateQuantity(cartId, type) {
+                fetch(`/Home/ChangeQuantityItemCart?cartId=${cartId}&quantity=${type}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        this.CallData()
+                    })
+            },
+            deleteCart(cartID) {
+                fetch(`/Home/DeleteCart?cartId=${cartID}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        this.CallData()
+                    })
+            },
+            CheckTransaction() {
+                let currentThis = this;
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang kiểm tra giao dịch',
+                    html: 'có thể thử lại sau <b></b> giây.',
+                    timer: 10000,
+                    timerProgressBar: true,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Math.ceil(Swal.getTimerLeft() / 1000)
+                        }, 1000)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        currentThis.Order.PaymentStatus = true;
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Thanh toán thành công vui lòng chờ trong giây lát',
+                            showConfirmButton: false,
+                            timer: 2500
+                        })
+                            .then(rs => {
+                                setTimeout(function () {
+                                    currentThis.GetOrder()
+                                }, 2000)
+                            })
+                    }
+                })
+            },
+            GetOrder() {
+                let _data = new FormData();
+                _data.append("Id", 0);
+                _data.append("CustomerName", this.Order.CustomerName);
+                _data.append("Email", this.Order.Email);
+                _data.append("PhoneNumber", this.Order.PhoneNumber);
+                _data.append("ShippingAddress", this.Order.ShippingAddress);
+                _data.append("TotalAmount", this.Order.TotalAmount);
+                _data.append("PaymentMethods", this.Order.PaymentMethods);
+                _data.append("PaymentStatus", this.Order.PaymentStatus);
+                _data.append("Status", this.Order.Status);
+                this.ListItem.forEach(function (item, index) {
+                    _data.append(`Items[${index}][Id]`, item.Id);
+                    _data.append(`Items[${index}][OrderId]`, 0);
+                    _data.append(`Items[${index}][ProductId]`, item.productId);
+                    _data.append(`Items[${index}][UnitPrice]`, item.product.price);
+                    _data.append(`Items[${index}][Quantity]`, item.quantity);
+                });
+                console.log("order", _data);
+
+                fetch("/Home/CretaeOrder", {
+                    method: "POST",
+                    headers: {
+                        processData: false,
+                        contentType: false,
+                    },
+                    body: _data
+                })
+                    .then(res => {
+
+                    })
+            }
+        }
+    })
+
+</script>
