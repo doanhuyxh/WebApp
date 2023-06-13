@@ -464,29 +464,31 @@ namespace WebApp.Controllers
                 order.IsDeleted = false;
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                foreach (var item in vm.Items)
+                if (vm.Items != null)
                 {
-                    OrderDetail orderDetail = new OrderDetail();
-                    orderDetail.OrderId = order.Id;
-                    orderDetail.ProductId = item.ProductId;
-                    orderDetail.Quantity = item.Quantity;
-                    orderDetail.UnitPrice = item.UnitPrice;
-                    _context.Add(orderDetail);
-                    await _context.SaveChangesAsync();
+                    foreach (var item in vm.Items)
+                    {
+                        OrderDetail orderDetail = new OrderDetail();
+                        orderDetail.OrderId = order.Id;
+                        orderDetail.ProductId = item.ProductId;
+                        orderDetail.Quantity = item.Quantity;
+                        orderDetail.UnitPrice = item.UnitPrice;
+                        _context.Add(orderDetail);
+                        await _context.SaveChangesAsync();
+                    }
+                    // sử lý cart sau khi order
+                    var cartDeleteAll = _context.Cart.Where(c => c.CreatedBy == user).ToList();
+                    cartDeleteAll.ForEach(cr =>
+                    {
+                        cr.IsDeleted = true;
+                        _context.Update(cr);
+                    });
+                    _context.SaveChanges();
                 }
+
                 jsonResult.Success = true;
                 jsonResult.Mesaage = "";
                 jsonResult.Object = vm;
-
-                // sử lý cart sau khi order
-                var cartDeleteAll = _context.Cart.Where(c => c.CreatedBy == user).ToList();
-                cartDeleteAll.ForEach(cr =>
-                {
-                    cr.IsDeleted = true;
-                    _context.Update(cr);
-                });
-                _context.SaveChanges();
-
 
                 return Json(jsonResult);
             }
@@ -498,6 +500,12 @@ namespace WebApp.Controllers
                 return Json(jsonResult);
             }
 
+        }
+
+        [HttpGet]
+        public IActionResult OrderHistory()
+        {
+            return View();
         }
     }
 }

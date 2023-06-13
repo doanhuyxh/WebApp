@@ -56,11 +56,23 @@
     width: 200px;
     overflow: auto
 }
-.Slug_and_Name_width{
+
+.Slug_and_Name_width {
     width: 150px;
     overflow: scroll;
 }
+
 .width_code {
     width: 15px !important;
     text-align: center;
+}
+
+.custom-select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background: none;
+    font-size: 9pt;
+    color: white;
+    font-weight: bold;
 }

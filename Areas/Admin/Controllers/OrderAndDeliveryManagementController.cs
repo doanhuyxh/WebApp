@@ -86,5 +86,29 @@ namespace WebApp.Areas.Admin.Controllers
                 return Ok(json);
             }
         }
+        [HttpGet]
+        public IActionResult ChangePaymentSattus(int orderId)
+        {
+            JsonResultViewModel json = new JsonResultViewModel();
+            try
+            {
+                Order order = new Order();
+                order = _context.Order.FirstOrDefault(i => i.Id == orderId && i.IsDeleted == false);
+                order.PaymentStatus = !order.PaymentStatus;
+                _context.Update(order);
+                _context.SaveChanges();
+                json.Success = true;
+                json.Object = order;
+                json.Mesaage = "";
+                return Ok(json);
+            }
+            catch (Exception ex)
+            {
+                json.Success = false;
+                json.Object = null;
+                json.Mesaage = ex.Message;
+                return Ok(json);
+            }
+        }
     }
 }
