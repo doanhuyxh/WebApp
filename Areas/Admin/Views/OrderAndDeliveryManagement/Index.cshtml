@@ -1,0 +1,80 @@
+﻿<div class="container" style="margin-top:120px;" id="OrderVue">
+    <table class="table table-responsive">
+        <thead class="bg-danger text-success font-weight-bold">
+            <tr>
+                <td>ID</td>
+                <td>Tên khách hàng</td>
+                <td>Eamil</td>
+                <td>Số điện thoại</td>
+                <td>Tổng tiền</td>
+                <td>Trạng thái thanh toán</td>
+                <td>Địa chỉ nhận</td>
+                <td>Chi tiết</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(item, index) in ListItem" :key="index">
+                <td>{{item.id}}</td>
+                <td>{{item.customerName}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.phoneNumber}}</td>
+                <td>{{item.totalAmount}}</td>
+                <td>
+                    <p class="btn btn-success" v-if="item.paymentStatus">Đã thanh toán</p>
+                    <p class="btn btn-danger" v-else>Chưa thanh toán</p>
+                </td>
+                <td>{{item.shippingAddress}}</td>
+                <td>
+                    <button type="button" class="btn btn-warning" v-on:click="ViewDetail(index)"><i class="fa-solid fa-eye" style="color: #2a7e0c;"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var OrderVue = new Vue({
+        el: "#OrderVue",
+        data: {
+            ListItem: [],
+            OrderListItem:[]
+        },
+        mounted() {
+            this.CallData();
+        },
+        methods: {
+            CallData() {
+                fetch("/Admin/OrderAndDeliveryManagement/GetAllOrder")
+                    .then(res => res.json())
+                    .then(data => {
+                        this.ListItem = data;
+                        this.ListItem.forEach(function(item, index)=>{
+                            this.
+                        });
+                        console.log("ListItem", this.ListItem);
+                    })
+            },
+            ViewDetail(index){
+                $("#exampleModal").modal('show')
+            }
+        }
+    })
+</script>
