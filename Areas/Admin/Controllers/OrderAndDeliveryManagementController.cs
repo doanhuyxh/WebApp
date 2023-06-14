@@ -25,7 +25,6 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult GetAllOrder()
         {
             var ds = from order in _context.Order

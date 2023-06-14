@@ -503,9 +503,48 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult OrderHistory()
         {
             return View();
+        }
+
+        [HttpGet]
+
+        public IActionResult OrderHistoryApi()
+        {
+            var ds = from order in _context.Order
+                     where order.IsDeleted == false && order.CreatedBy == user
+                     select new OrderViewModel
+                     {
+                         Id = order.Id,
+                         CustomerName = order.CustomerName,
+                         Email = order.Email,
+                         PhoneNumber = order.PhoneNumber,
+                         ShippingAddress = order.ShippingAddress,
+                         TotalAmount = order.TotalAmount,
+                         PaymentMethods = order.PaymentMethods,
+                         PaymentStatus = order.PaymentStatus,
+                         Status = order.Status,
+                         Items = (from orderDetail in _context.OrderDetail
+                                  where orderDetail.OrderId == order.Id
+                                  select new OrderDetailViewModel
+                                  {
+                                      Id = orderDetail.Id,
+                                      OrderId = orderDetail.OrderId,
+                                      ProductId = orderDetail.ProductId,
+                                      Quantity = orderDetail.Quantity,
+                                      UnitPrice = orderDetail.UnitPrice,
+                                      Img = _context.Product.FirstOrDefault(i => i.Id == orderDetail.ProductId)!.Img1 ?? "",
+                                      ProductName = _context.Product.FirstOrDefault(i => i.Id == orderDetail.ProductId)!.Name ?? "",
+
+                                  }).ToList(),
+                         CreatedBy = order.CreatedBy,
+                         CreatedDate = order.CreatedDate,
+                         IsDeleted = order.IsDeleted,
+                     };
+
+            return Ok(ds.ToList());
         }
     }
 }

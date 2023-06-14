@@ -43,7 +43,7 @@ namespace WebApp.Data
                 FirstName = "Đoàn",
                 LastName = "Quang Huy",
                 IsActive = true,
-                AvatartPath = "upload/avatar/blank_avatar.png"
+                AvatartPath = "/upload/avatar/blank_avatar.png"
             };
             var adminUser = new ApplicationUser
             {
@@ -52,7 +52,7 @@ namespace WebApp.Data
                 FirstName = "Người Dùng",
                 LastName = "1",
                 IsActive = true,
-                AvatartPath = "upload/avatar/blank_avatar.png"
+                AvatartPath = "/upload/avatar/blank_avatar.png"
             };
             var memberUser = new ApplicationUser
             {

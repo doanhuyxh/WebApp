@@ -5,7 +5,7 @@
         <div class="">
             <a href="/" class="btn btn-facebook">Chọn sản phẩm khác</a>
             <a href="/Home/OrderHistory" class="btn btn-warning">Lịch sử mua hàng</a>
-            <button type="button" class="btn btn-danger" v-on:click="deleteCart(0)">Xoá tất cả giỏ hàng</button>
+            <button type="button" class="btn btn-danger" :disabled="checkOrder" v-on:click="deleteCart(0)">Xoá tất cả giỏ hàng</button>
         </div>
     </div>
     <div class="cart_body p-3">
@@ -115,10 +115,10 @@
                         <p class="card-text"><small class="text-muted">Nội dung chuyển khoản: </small><strong class="text-danger">KH_{{Order.user}}_CKDH</strong></p>
                     </div>
                     <img src="/upload/icon/bankQR.png" class="card-img-bottom w-50 m-auto">
-                    <button type="button" class="btn btn-success m-auto p-2 mt-2" v-on:click="CheckTransaction()">Kiểm tra thanh toán</button>
+                    <button type="button" class="btn btn-success m-auto p-2 mt-2" :disabled="checkOrder" v-on:click="CheckTransaction()">Kiểm tra thanh toán</button>
                 </div>
                 <div class="text-center" v-show="Order.PaymentMethods == 1">
-                    <button type="button" class="btn btn-success" v-on:click="GetOrder()">Đặt hàng</button>
+                    <button type="button" class="btn btn-success" :disabled="checkOrder" v-on:click="GetOrder()">Đặt hàng</button>
                 </div>
             </div>
         </div>
@@ -157,6 +157,15 @@
                 }, 0);
                 this.Order.TotalAmount = total;
                 return total;
+            },
+            checkOrder() {
+
+                if (this.ListItem.lenght != 0) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
             }
         },
         methods: {

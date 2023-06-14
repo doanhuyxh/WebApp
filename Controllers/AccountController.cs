@@ -71,29 +71,38 @@ namespace WebApp.Controllers
             if (result.Succeeded)
             {
                 var role = await _userManager.GetRolesAsync(user);
-                var claims = new List<Claim> {
+                try
+                {
+
+                    var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, role.FirstOrDefault()!),
                 };
 
-                // Xây dựng ClaimsIdentity
-                var claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    // Xây dựng ClaimsIdentity
+                    var claimsIdentity = new ClaimsIdentity(
+                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                // Thiết lập các thuộc tính xác thực (nếu có)
-                var authProperties = new AuthenticationProperties
+                    // Thiết lập các thuộc tính xác thực (nếu có)
+                    var authProperties = new AuthenticationProperties
+                    {
+                        IsPersistent = true, // Thiết lập cho phép lưu cookie vĩnh viễn (remember me)
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1), // Thiết lập thời gian hết hạn sau 2 giờ
+                    };
+
+
+                    // Đăng ký phiên đăng nhập hiện tại vào HttpContext
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
+
+                }
+                catch (Exception ex)
                 {
-                    IsPersistent = true, // Thiết lập cho phép lưu cookie vĩnh viễn (remember me)
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1), // Thiết lập thời gian hết hạn sau 2 giờ
-                };
 
-
-                // Đăng ký phiên đăng nhập hiện tại vào HttpContext
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
+                }
 
 
                 if (role.Contains("SuperAdmin") || role.Contains("Admin"))

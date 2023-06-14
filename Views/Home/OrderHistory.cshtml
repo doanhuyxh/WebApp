@@ -1,1 +1,124 @@
-﻿
+﻿<div class="container" id="OrderHistoryVue">
+    <table class="table table-responsive" id="OrderTable">
+        <thead class="bg-success bg-gradient text-white font-weight-bold">
+            <tr>
+                <td>ID</td>
+                <td>Họ và tên</td>
+                <td>Số điện thoại</td>
+                <td>Tổng tiền</td>
+                <td class="text-center">Trạng thái thanh toán</td>
+                <td class="text-center">Trạng thái giao hàng</td>
+                <td>Địa chỉ nhận</td>
+                <td>Chi tiết</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(item, index) in ListItem" :key="index">
+                <td>{{item.id}}</td>
+                <td>{{item.customerName}}</td>
+                <td>{{item.phoneNumber}}</td>
+                <td>{{item.totalAmount}}VNĐ</td>
+                <td class="text-center">
+                    <p class="btn btn-success" v-if="item.paymentStatus" >Đã thanh toán</p>
+                    <p class="btn btn-danger" v-else >Chưa thanh toán</p>
+                </td>
+                <td class="">
+                    <select class="form-select form-select-lg mb-3 custom-select" v-bind:class="getStatusClass(item.status)" disabled v-model="item.status">
+                        <option value="1" class="btn btn-secondary py-2"><p>Đang chờ</p></option>
+                        <option value="2" class="btn btn-warning py-2"><p>Đang giao</p></option>
+                        <option value="3" class="btn btn-success py-2"><p>Hoàn Thành</p></option>
+                        <option value="4" class="btn btn-danger py-2"><p>Đã huỷ</p></option>
+                    </select>
+                </td>
+                <td class="text text-wrap">{{item.shippingAddress}}</td>
+                <td>
+                    <button type="button" class="btn btn-warning" v-on:click="ViewDetail(index)"><i class="fa-solid fa-eye" style="color: #2a7e0c;"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content" v-if="showModel">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng ID: <strong>{{ListItem[currentIndexOrder].id}}</strong></h5>
+                    <p class="text text-center text-normal">Địa chỉ email người nhận: <strong>{{ListItem[currentIndexOrder].email}}</strong></p>
+                    <p class="text float-end text-normal" v-show="ListItem[currentIndexOrder].paymentMethods == 2">Phương thức thanh toán: <strong class="text-success font-weight-bold">Chuyển khoản</strong></p>
+                    <p class="text float-end text-normal" v-show="ListItem[currentIndexOrder].paymentMethods == 1">Phương thức thanh toán: <strong class="text-success font-weight-bold">Tiền mặt</strong></p>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-responsive">
+                        <tbody>
+                            <tr v-for="(itemOrder, index) in OrderListItem[currentIndexOrder]">
+                                <td>
+                                    <div class="card mb-3" style="max-width: 100%;">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img :src="itemOrder.img" class="img-fluid rounded-start" style="height:100px; width:auto;">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{itemOrder.productName}}</h5>
+                                                    <p class="card-text">Số lượng {{itemOrder.quantity}} Đơn giá {{itemOrder.unitPrice}}VNĐ</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var OrderHistoryVue = new Vue({
+        el: "#OrderHistoryVue",
+        data: {
+            ListItem: [],
+            OrderListItem: [],
+            currentIndexOrder: 0,
+            showModel: false,
+        },
+        mounted() {
+            this.CallData();
+        },
+        methods: {
+            CallData() {
+                fetch("/Home/OrderHistoryApi")
+                    .then(res => res.json())
+                    .then(data => {
+                        this.ListItem = data;
+                        console.log("ListItem ", this.ListItem);
+                        this.ListItem.forEach((item, index) => {
+                            this.OrderListItem.push([...item.items]);
+                        });
+                        console.log("Items in order ", this.OrderListItem);
+                    });
+            },
+            ViewDetail(index) {
+                this.currentIndexOrder = index;
+                this.showModel = true;
+                $("#exampleModal").modal('show')
+            },
+            getStatusClass(status) {
+                if (status == '1') {
+                    return 'bg-secondary';
+                } else if (status == '2') {
+                    return 'bg-warning';
+                } else if (status == '3') {
+                    return 'bg-success';
+                } else if (status == '4') {
+                    return 'bg-danger';
+                }
+            },
+        }
+    });
+    </script>
