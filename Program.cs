@@ -11,6 +11,7 @@ using System.Configuration;
 using System.Security.Claims;
 using WebApp.Data;
 using WebApp.Models;
+using WebApp.Repository;
 using WebApp.Services;
 
 namespace WebApp
@@ -48,10 +49,14 @@ namespace WebApp
             builder.Services.AddScoped<UserManager<ApplicationUser>>();
 
             builder.Services.AddScoped<IIdentityDataInitializer, IdentityDataInitializer>();
+            //add service system
             builder.Services.AddScoped<ICommon, Common>();
+            //add send mail
             builder.Services.AddScoped<IEmailGoogle, EmailGoogle>();
 
-
+            //add colection MongoDb
+            builder.Services.AddScoped<IRoomChart, RoomChart>();
+            builder.Services.AddScoped<IMessengeChat, MessengeChat>();
 
             builder.Services.Configure<IdentityOptions>(options =>
             {

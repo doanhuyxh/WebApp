@@ -6,6 +6,7 @@ using WebApp.Data;
 using WebApp.Models;
 using WebApp.Models.AccountViewModels;
 using WebApp.Models.ViewModel;
+using WebApp.Repository;
 using WebApp.Services;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -18,9 +19,11 @@ namespace WebApp.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly string user;
         private readonly IEmailGoogle _emailGoogle;
+        private readonly IMessengeChat _messengeChat;
 
-        public HomeController(UserManager<ApplicationUser> userManager, IConfiguration configuration, ApplicationDbContext context, IHttpContextAccessor accessor, IEmailGoogle emailGoogle)
+        public HomeController(UserManager<ApplicationUser> userManager, IConfiguration configuration, ApplicationDbContext context, IHttpContextAccessor accessor, IEmailGoogle emailGoogle, IMessengeChat _messengeChat)
         {
+            this._messengeChat = _messengeChat;
             _configuration = configuration;
             _context = context;
             _userManager = userManager;
@@ -545,6 +548,19 @@ namespace WebApp.Controllers
                      };
 
             return Ok(ds.ToList());
+        }
+
+        public IActionResult chat()
+        {
+            bool check = _messengeChat.CreatedMessenge("adadada", "adadadada");
+            if (check)
+            {
+                return Ok("thành công");
+            }
+            else
+            {
+                return Ok("thất bại");
+            }
         }
     }
 }
