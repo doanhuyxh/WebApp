@@ -17,6 +17,8 @@ namespace WebApp.Data
 
         private readonly string RoomsCollectionName;
 
+        private readonly string MessageInRoomsCollectionName;
+
         public IMongoDatabase dataBase { get; set; }
 
         public MongoDbContext(IConfiguration configuration)
@@ -29,6 +31,8 @@ namespace WebApp.Data
             MessengesCollectionName = configuration["ChatRealTimeDatabase:MessengesCollectionName"] ?? "";
 
             RoomsCollectionName = configuration["ChatRealTimeDatabase:RoomsCollectionName"] ?? "";
+
+            MessageInRoomsCollectionName = configuration["ChatRealTimeDatabase:MessageInRoomsCollectionName"] ?? "";
 
             ConnectDB();
 
@@ -49,6 +53,10 @@ namespace WebApp.Data
         public string GetRoomsCollectionName()
         {
             return RoomsCollectionName;
+        }
+          public string GetMessageInRoomCollectionName()
+        {
+            return MessageInRoomsCollectionName;
         }
 
         public void ConnectDB()

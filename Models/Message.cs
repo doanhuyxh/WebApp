@@ -13,16 +13,20 @@ namespace WebApp.Models
         [BsonRepresentation(BsonType.String)]
         public string Content { get; set; }
 
-        [BsonElement("userId")]
+        [BsonElement("SenderId")]
         [BsonRepresentation(BsonType.String)]
-        public string UserId { get; set; }
+        public string SenderId { get; set; }
 
-        [BsonElement("roomId")]
+        [BsonElement("ReceiverId")]
         [BsonRepresentation(BsonType.String)]
-        public string RoomId { get; set; }
+        public string ReceiverId { get; set; }
 
         [BsonRepresentation(BsonType.DateTime)]
-        [BsonElement("timeCreate")]
+        [BsonElement("TimeCreate")]
         public DateTime TimeCreate { get; set; }
+
+        [BsonRepresentation(BsonType.Boolean)]
+        [BsonElement("ReadStatus")]
+        public bool ReadStatus { get; set; }
     }
 }

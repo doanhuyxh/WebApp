@@ -11,14 +11,14 @@ namespace WebApp.Models
 
         [BsonElement("name")]
         [BsonRepresentation(BsonType.String)]
-        public string Name { set; get; }
+        public string RoomName { set; get; }
 
-        [BsonElement("type")]
+        [BsonElement("Messages")]
         [BsonRepresentation(BsonType.Boolean)]
-        public bool Type { set; get; } // true là công cộng false là riêng tư
+        public string Messages { set; get; }
 
-        [BsonElement("listUser")]
+        [BsonElement("Members")]
         [BsonRepresentation(BsonType.Array)]
-        public List<string> ListUser { set; get; }
+        public List<string> Members { set; get; }
     }
 }

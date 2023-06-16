@@ -2,6 +2,6 @@
 {
     public interface IMessengeChat
     {
-        bool CreatedMessenge(string userId, string messenge);
+        bool CreatedMessenge(string SenderId, string messenge, string ReceiverId);
     }
 }

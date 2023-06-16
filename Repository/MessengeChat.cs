@@ -13,14 +13,15 @@ namespace WebApp.Repository
             _messengeCollection = this.dataBase.GetCollection<Messenge>(this.GetMessengesCollectionName());
         }
 
-        public bool CreatedMessenge(string userId, string messenge)
+        public bool CreatedMessenge(string SenderId, string messenge, string ReceiverId)
         {
             try
             {
                 Messenge ms = new Messenge();
-                ms.UserId = userId;
+                ms.SenderId = SenderId;
                 ms.Content = messenge;
-                ms.RoomId = "1";
+                ms.ReceiverId = ReceiverId;
+                ms.ReadStatus = false;
                 ms.TimeCreate = DateTime.Now;
 
                 _messengeCollection.InsertOneAsync(ms);
