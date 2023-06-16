@@ -552,7 +552,7 @@ namespace WebApp.Controllers
 
         public IActionResult chat()
         {
-            bool check = _messengeChat.CreatedMessenge("adadada", "adadadada");
+            bool check = _messengeChat.CreatedMessenge("Người gửi", "nội dung", "Người nhận");
             if (check)
             {
                 return Ok("thành công");
