@@ -5,10 +5,10 @@
 
 
 <link href="~/css/admin/videoandchat.css" rel="stylesheet" />
-<div class="container mt-10">
+<div class="container mt-10" id="chatVue">
     <div class="row">
         <section class="discussions">
-            
+
             <div class="discussion message-active">
                 <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
                     <div class="online"></div>
@@ -20,7 +20,7 @@
                 <div class="timer">12 sec</div>
             </div>
 
-                <div class="discussion">
+            <div class="discussion">
                 <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1435348773030-a1d74f568bc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80);">
                     <div class="online"></div>
                 </div>
@@ -31,11 +31,21 @@
                 <div class="timer">1 week</div>
             </div>
         </section>
+
+        @*bắt đầu phần section chát*@
+
         <section class="chat">
-            <div class="header-chat">
+            <div class="header-chat position-relative">
                 <i class="icon fa fa-user-o" aria-hidden="true"></i>
-                <p class="name">Megan Leib</p>
-                <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+                <p class="name">{{CurrentUserFrom}}</p>
+                <div class="position-absolute end-0 d-flex">
+                <button type="button" class="btn btn-outline-primary">
+                    <img src="/upload/icon/phone-volume-solid.png" width="15" height="20"  />
+                </button>
+                <button type="button" class="btn btn-outline-success mx-2">
+                    <img src="/upload/icon/video-solid.png" width="15" height="20"  />
+                </button>
+                </div>
             </div>
             <div class="messages-chat">
                 <div class="message">
@@ -75,3 +85,24 @@
         </section>
     </div>
 </div>
+
+<script type="text/javascript">
+    var chatVue = new Vue({
+        el: "#chatVue",
+        data: {
+            ListUser:[],
+            ListCurrentChat:[],
+            CurrentUserTo: "",
+            CurrentUserFrom:"Đoàn QUang Huy"
+        },
+        computed: {
+
+        },
+        mounted() {
+
+        },
+        methods: {
+
+        }
+    })
+</script>
